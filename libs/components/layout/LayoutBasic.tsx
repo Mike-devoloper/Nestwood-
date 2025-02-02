@@ -28,23 +28,14 @@ const withLayoutBasic = (Component: any) => {
             return (
                 <>
                 <Head>
-                    <title>Nestar</title>
+                    <title>Nestwood</title>
                 </Head>
                 <Stack id="pc-wrap">
                     <Stack id={"top"}>
                         <Top/>
                     </Stack>
-                    <Stack
-                    className={"header-basic"}
-                    style={{
-                        backgroundImage: `url(/img/banner/properties.png)`,
-                        backgroundSize: "cover",
-                        boxShadow: "inset 10px 40px 150px 40px rgb(24 22 36)"
-                    }}>
-                        <Stack className={"container"}>
-                            <strong>Search</strong>
-                            <span>We are glad to see you again !</span>
-                        </Stack>
+                    <Stack id={"header-basic"}>
+                        
                     </Stack>
                  <Stack id="main">
                      <Component {...props}/>

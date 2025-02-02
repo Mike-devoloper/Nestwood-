@@ -1,8 +1,7 @@
 import useDeviceDetect from "@/libs/hooks/useDeviceDetect"
-import { brown, green } from "@mui/material/colors"
 import { Stack } from "@mui/system"
 import Head from "next/head"
-import HeaderFilter from "../HeaderFilter"
+import ImageSlider from "../ImageSlider"
 import Footer from "./Footer"
 import Top from "./Top"
 
@@ -13,7 +12,7 @@ const withLayoutMain = (Component: any) => {
     if(device === "mobile") {
 
         return <>
-             <Head><title>Nestar</title></Head>
+             <Head><title>Nestwood</title></Head>
             <Stack id="mobile-wrap">
             <Stack id={"top"}>
                 <Top/>
@@ -31,14 +30,14 @@ const withLayoutMain = (Component: any) => {
 
         return (
             <>
-       <Head><title>Nestar</title></Head>
+       <Head><title>Nestwood</title></Head>
        <Stack id="pc-wrap">
        <Stack id={"top"}>
         <Top/>
        </Stack>
        <Stack className={"header-main"}>
             <Stack className={"container"}>
-                <HeaderFilter/>
+                <ImageSlider/>
             </Stack>
        </Stack>
 
