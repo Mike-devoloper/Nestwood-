@@ -1,19 +1,37 @@
 import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
-import { Box, FormControl, InputLabel, Link, Menu, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { alpha, Badge, Box, Button, FormControl, InputLabel, Link, Menu, MenuItem, MenuProps, Select, SelectChangeEvent, styled } from "@mui/material";
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Stack } from "@mui/system"
 import { useState } from "react";
 
 
+
 const Top = () => {
+    const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
     const device = useDeviceDetect()
     const [category, setCategory] = useState<string>('');
+    const languages = [
+        { code: "en", label: "English", flag: "/img/flag/langen.png" },
+        { code: "kr", label: "Korean", flag: "/img/flag/langkr.png" },
+        { code: "ru", label: "Russian", flag: "/img/flag/langru.png" },
+      ];
 
     //HANDLERS 
     const handleChange = (event: SelectChangeEvent) => {
         setCategory(event.target.value);
       };
+
+      const [selectedLang, setSelectedLang] = useState(languages[0]);
+      const [dropdownOpen, setDropdownOpen] = useState(false);
+    
+      const handleLanguageChange = (lang: any) => {
+        setSelectedLang(lang);
+        setDropdownOpen(false); // Close dropdown on selection
+      };
+
+
+    
     if (device === "mobile") {
         return (
             <Stack className={"navbar"}>
@@ -52,7 +70,9 @@ const Top = () => {
                     <button className="search-btn">Search</button>
                 </Box>
                 <Box className={"basket-box"}>
+                <Badge color="secondary" badgeContent={1}>
                     <img src="/img/icons/basket.svg" alt="basket" />
+                </Badge>
                 </Box>
                 <Box className={"user-box"}>
                 <Link href={'/account/join'}>
@@ -109,56 +129,64 @@ const Top = () => {
 								<div> {('CS')} </div>
 							</Link>
 					 </Box>
-                     {/* <div className={'lan-box'}>
-								{user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />}
-								<Button
-									disableRipple
-									className="btn-lang"
-									onClick={langClick}
-									endIcon={<CaretDown size={14} color="#616161" weight="fill" />}
-								>
-									<Box component={'div'} className={'flag'}>
-										{lang !== null ? (
-											<img src={`/img/flag/lang${lang}.png`} alt={'usaFlag'} />
-										) : (
-											<img src={`/img/flag/langen.png`} alt={'usaFlag'} />
-										)}
-									</Box>
-								</Button>
+                     <div style={{ position: "relative", display: "inline-block" }}>
+                            {/* Toggle button */}
+                            <button
+                                onClick={() => setDropdownOpen(!dropdownOpen)}
+                                style={{
+                                display: "flex",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                border: "none",
+                                background: "none",
+                                }}
+                            >
+                                <img
+                                src={selectedLang.flag}
+                                alt={`${selectedLang.label} flag`}
+                                style={{ width: "24px", height: "17px", borderRadius: "2px", marginRight: "8px" }}
+                                />
+                                {selectedLang.label}
+                            </button>
 
-								<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose} sx={{ position: 'absolute' }}>
-									<MenuItem disableRipple onClick={langChoice} id="en">
-										<img
-											className="img-flag"
-											src={'/img/flag/langen.png'}
-											onClick={langChoice}
-											id="en"
-											alt={'usaFlag'}
-										/>
-										{t('English')}
-									</MenuItem>
-									<MenuItem disableRipple onClick={langChoice} id="kr">
-										<img
-											className="img-flag"
-											src={'/img/flag/langkr.png'}
-											onClick={langChoice}
-											id="uz"
-											alt={'koreanFlag'}
-										/>
-										{t('Korean')}
-									</MenuItem>
-									<MenuItem disableRipple onClick={langChoice} id="ru">
-										<img
-											className="img-flag"
-											src={'/img/flag/langru.png'}
-											onClick={langChoice}
-											id="ru"
-											alt={'russiaFlag'}
-										/>
-										{t('Russian')}
-									</MenuItem>
-								</StyledMenu>
-					</div> */}
+                            {/* Dropdown menu */}
+                            {dropdownOpen && (
+                                <div
+                                style={{
+                                    position: "absolute",
+                                    top: "100%",
+                                    left: "0",
+                                    zIndex: 1,
+                                    backgroundColor: "white",
+                                    border: "1px solid #ddd",
+                                    padding: "5px",
+                                    width: "120px",
+                                }}
+                                >
+                                {languages.map((lang) => (
+                                    <div
+                                    key={lang.code}
+                                    onClick={() => handleLanguageChange(lang)}
+                                    style={{
+                                        padding: "5px 10px",
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        borderBottom: "1px solid #ddd",
+                                    }}
+                                    >
+                                    <img
+                                        src={lang.flag}
+                                        alt={`${lang.label} flag`}
+                                        style={{ width: "20px", height: "14px", marginRight: "8px" }}
+                                    />
+                                    {lang.label}
+                                    </div>
+                                ))}
+                                </div>
+                            )}
+                     </div>
+
                 </Stack>
                </Stack>
             </Stack>

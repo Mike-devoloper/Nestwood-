@@ -1,33 +1,36 @@
 import { useEffect, useState } from "react"
 import { ArrowBigLeft, ArrowBigRight, Circle, CircleDot } from "lucide-react"
-import { Stack } from "@mui/system"
+import { Box, Stack } from "@mui/material"
 
 
 
 
 
 const images = [
-  { url: "/img/property/banner1.avif", alt: "Banner One" },
-  { url: "/img/property/banner2.avif", alt: "Banner Two" },
-  { url: "/img/property/banner3.avif", alt: "Banner Three" },
+  { url: "/img/property/furni1.jpg", alt: "Banner One" },
+  { url: "/img/property/furni2.jpg", alt: "Banner Two" },
+  { url: "/img/property/furni3.jpg", alt: "Banner Three" },
 ]
 
 const texts = [
-  "Explore Beautiful Properties",
-  "Modern and Cozy Living Spaces",
-  "Your Dream Home Awaits",
+  "Elevate Your Home with Stylish and Comfortable Furniture",
+"Crafting Timeless Furniture for Every Room You Love",
+"Discover Furniture That Blends Comfort and Modern Elegance"
 ]
 
 export function ImageSlider() {
   const [imageIndex, setImageIndex] = useState(0)
-  const [textVisible, setTextVisible] = useState(false) // To handle text visibility animation
+  const [textVisible, setTextVisible] = useState(false) 
 
   useEffect(() => {
-    // Set the text to slide in after the component loads
-    setTimeout(() => {
-      setTextVisible(true)
-    }, 1000) // Slide in after 100ms delay
-  }, [])
+    setTextVisible(false); 
+    const textAnimationTimer = setTimeout(() => {
+      setTextVisible(true); 
+    }, 1000);
+
+    return () => clearTimeout(textAnimationTimer); 
+  }, [imageIndex]);
+
 
   function showNextImage() {
     setImageIndex(index => {
@@ -59,36 +62,39 @@ export function ImageSlider() {
           overflow: "hidden",
         }}
       >
-        <Stack
+       <Stack 
+       className="title-box"
+       sx={{
+        width: "450px",
+        height: "250px",
+        background: "rgb(10, 24, 74, 0.8)",
+        color: "white",
+        zIndex: "99",
+        position: "absolute", 
+        top: "230px",
+        left: "100px",
+        display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "center",
+        textAlign: "left",
+        columnGap: "5px",
+        opacity: textVisible ? 1 : 0, 
+        borderRadius: "8px",
+        lineHeight: "1.1"
+      }}>
+       <Box
           className={`image-text ${textVisible ? "slide-in" : ""}`}
-          sx={{
-            width: "500px",
-            height: "300px",
-            background: "rgb(9, 18, 44, 0.8)",
-            color: "white",
-            zIndex: "99",
-            position: "absolute", 
-            top: "40%",
-            left: "5%",
-            transform: "translate(-50%, -50%)",
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "center",
-            textAlign: "center",
-            opacity: textVisible ? 1 : 0, 
-            border: "2px solid black", 
-            borderRadius: "8px",
-          }}
         >
-          <p style={{fontSize: "15px"}}>Limited offer</p>
+          <p style={{fontSize: "12px", color: "orange", fontWeight: "bold"}}>Limited time offer</p>
           <h1>
             {texts[imageIndex].split(' ').map((word, i) => (
               i === 0 ? 
-                <span key={i} style={{ fontSize: "50px", fontWeight: "bold" }}>{word}</span> 
+                <span key={i} style={{ fontSize: "50px", fontWeight: "bold", color: "#fff"}}>{word}</span>
                 : ` ${word}`
             ))}
           </h1>
-        </Stack>
+        </Box>
+       </Stack>
         {images.map(({ url, alt }, index) => (
           <img
             key={url}

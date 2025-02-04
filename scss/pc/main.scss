@@ -67,6 +67,42 @@
                     cursor: pointer;
                 }
             }
+            .user-box{
+                width: 270px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                .join-box {
+                    height: 40px;
+                    width: 150px;
+                    display: flex;
+                    align-items:center ;
+                    justify-content: center;
+                    border-radius: 60px;
+                    border: 1px solid #000;
+                    cursor: pointer;
+                    svg {
+                        color: #000;
+                        margin-right: 10px;
+                    }
+                    span {
+                        font-family: $font;
+                        font-size:14px ;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: normal;
+                        color: #000;
+                    }
+                }
+                .login-user {
+                    img{
+                        width: 42px;
+                        height: 42px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                }
+            }
             .basket-box{
                 margin-right: 10px;
                 img{
@@ -75,59 +111,7 @@
                 }
                
             }
-            .router-box {
-                position: relative;
-                width: 617px;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                div {
-                    position: relative;
-                    color: #eeeeeeed;
-                    font-family: $font;
-                    font-size: 15px;
-                    font-style: normal;
-                    font-weight: 600;
-                    line-height: normal;
-                    cursor: pointer;
-                }
-                .user-box{
-                    width: 270px;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-end;
-                    .join-box {
-                        width: 180px;
-                        width: 617px;
-                        display: flex;
-                        align-items:center ;
-                        justify-content: center;
-                        border-radius: 60px;
-                        border: 1px solid #ffffff;
-                        cursor: pointer;
-                        svg {
-                            color: #ffffff;
-                            margin-right: 10px;
-                        }
-                        span {
-                            font-family: $font;
-                            font-size:14px ;
-                            font-style: normal;
-                            font-weight: 600;
-                            line-height: normal;
-                            color: #ffffff;
-                        }
-                    }
-                    .login-user {
-                        img{
-                            width: 42px;
-                            height: 42px;
-                            border-radius: 50%;
-                            object-fit: cover;
-                        }
-                    }
-                }
-            }
+           
            }
            .navbar-bottom {
             margin-top: 30px;
@@ -175,12 +159,12 @@
                     font-weight: 600;
                     color: #000;
                 }
+                div:hover {
+                    color: rgba(0, 0, 0, 0.7);
+                }
               }
            }
        }
-    }
-    .header-basic {
-
     }
 		
     .header-main {
@@ -196,7 +180,7 @@
                     display: block;
                     flex-shrink: 0;
                     flex-grow: 0;
-                    animation: slide 3s ease-in-out ;
+                    animation: slideIn 3s ease-in-out ;
                     // animation-delay: 3s;
                   }
                   .img-slider-btn {
@@ -223,40 +207,20 @@
                       scale: 1.4 0.6;
                     }
                   }
-                  @keyframes slide {
-                    0% {
-                      transform: translateX(-100%); 
-                    }
-                    100% {
-                      transform: translateX(0);
-                    }
-                  }
-                  @keyframes slideIn {
-                    0% {
-                      transform: translateX(-30%); 
-                    }
-                    100% {
-                      transform: translateX(0); 
-                    }
-                  }
+                  
                   .image-text {
                     opacity: 0;
                     transition: opacity 1s ease-in-out ; 
-                    font-size: 20px;
+                    font-size: 18px;
                     font-family: Verdana, Geneva, Tahoma, sans-serif;
                     font-weight: 400;
                     font-style: normal;
-                    padding-left: 15px;
-                     h1{
-                        span {
-                            display: block;
-                            padding-right: 90px;
-                        }
-                     }
+                    padding-left: 12px;
+                    color: rgba(255, 255 , 255, 0.7);
                   }
                   
                   .image-text.slide-in {
-                    animation: slideIn 1s ease-in-out forwards ; 
+                    animation: slideIn 1s ease-in-out  forwards; 
                     opacity: 1;
                   }
                   
@@ -308,15 +272,13 @@
                     color: black;
                     z-index: 100;
                   }
-                  @media not (prefers-reduced-motion) {
-                    .img-slider-img {
-                      transition: translate 2s ease-in-out;
-                    }
-                  
-                    .img-slider-btn:hover > *,
-                    .img-slider-btn:focus-visible > * {
-                      animation: squish 200ms ease-in-out;
-                    }
+                  .img-slider-img {
+                    transition: translate 2s ease-in-out;
+                  }
+                
+                  .img-slider-btn:hover > *,
+                  .img-slider-btn:focus-visible > * {
+                    animation: squish 200ms ease-in-out;
                   }
             }
         }
