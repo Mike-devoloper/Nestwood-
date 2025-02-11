@@ -80,7 +80,7 @@ export function ImageSlider() {
         columnGap: "5px",
         opacity: textVisible ? 1 : 0, 
         borderRadius: "8px",
-        lineHeight: "1.1"
+        lineHeight: "1.4"
       }}>
        <Box
           className={`image-text ${textVisible ? "slide-in" : ""}`}
@@ -89,7 +89,7 @@ export function ImageSlider() {
           <h1>
             {texts[imageIndex].split(' ').map((word, i) => (
               i === 0 ? 
-                <span key={i} style={{ fontSize: "50px", fontWeight: "bold", color: "#fff"}}>{word}</span>
+                <span key={i} style={{ fontSize: "35px", fontWeight: "bold", color: "#fff"}}>{word}</span>
                 : ` ${word}`
             ))}
           </h1>

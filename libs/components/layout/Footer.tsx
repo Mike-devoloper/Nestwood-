@@ -2,6 +2,7 @@ import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
 import { FacebookOutlined, Instagram, Telegram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { Stack } from "@mui/system"
+import Link from "next/link";
 
 const Footer = () => {
     const device = useDeviceDetect()
@@ -12,8 +13,11 @@ const Footer = () => {
             <Stack className={"footer-container"}>
                 <Stack className={"main"}>
                     <Stack className={"left"}>
-                        <Box component={"div"} className={"footer-box"}>
-                            <img src="/img/logo/logoWhite.svg" alt="" className="logo"/>
+                        <Box component={"div"} className={"logo"}>
+                            <Link href={"/"}>
+                            <img src="/img/logo/favicon.svg" alt="logo" />
+                            </Link>
+                            <div className="title">Nestwood</div>
                         </Box>
                         <Box component={"div"} className={"footer-box"}> 
                             <span>total free custumer care</span>
@@ -45,8 +49,8 @@ const Footer = () => {
                         <Box component={"div"} className={"bottom"}> 
                             <div>
                                 <strong>Popular search</strong>
-                                <span>Property for rent</span>
-                                <span>Property low to Hide</span>
+                                <span>Chair for living room</span>
+                                <span>Furniture price low to Hide</span>
                             </div>
                             <div>
                                 <strong>Quick links</strong>
@@ -59,16 +63,17 @@ const Footer = () => {
                             </div>
                             <div>
                                 <strong>Discover</strong>
-                                <span>Seoul</span>
-                                <span>Gyengido</span>
-                                <span>Busan</span>
-                                <span>Jeju</span>
+                                <span>Chair</span>
+                                <span>Dining Table</span>
+                                <span>Round Table</span>
+                                <span>Sofa-Bed</span>
+                                <span>Wardrobe</span>
                             </div>
                         </Box>
                     </Stack>
                 </Stack>
                 <Stack className={"second"}>
-                    <span>Nestar -All rights reserved. Nestar 2024</span>
+                    <span>Nestwood -All rights reserved. Nestwood 2024</span>
                     <span>Privacy Terms Sitemap</span>
                 </Stack>
             </Stack>

@@ -1,11 +1,11 @@
-import {  FavoriteOutlined, RemoveRedEyeOutlined } from "@mui/icons-material";
-import { Box, Badge, IconButton, Stack, Rating, Button } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Stack, Box, Divider, Typography, Badge, Rating, Button } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import { FavoriteOutlined, RemoveRedEyeOutlined } from "@mui/icons-material";
 
-const PopularPropertyCard = () => {
-    const [value, setValue] = useState<number | null>(2);
-
-return (
+const BestSellingProductCard = () => {
+  const [value, setValue] = useState<number | null>(2);
+  return (
     <Stack className="popular-card-box">
         <Box  className="card-img">
             <img src="/img/property/chair.jpg" alt="product-img"/>
@@ -39,7 +39,7 @@ return (
         </Stack>
 
     </Stack>
-)
-}
+  );
+};
 
-export default PopularPropertyCard;
+export default BestSellingProductCard;

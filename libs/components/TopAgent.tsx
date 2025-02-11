@@ -14,12 +14,6 @@ const TopAgents = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
                         <span>Top Agents</span>
                         <p>Our Top Agents always ready to serve</p>
                     </Box>
-                    <Box className="right">
-                        <div className="more-box">
-                            <span>See all agents</span>
-                            <img src="/img/icons/rightup.svg" alt=""/>
-                        </div>
-                    </Box>
                 </Stack>
                 <Stack className="wrapper">
                     <Box className="switch-btn swiper-agents-prev">
@@ -47,7 +41,7 @@ const TopAgents = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
                     <Box className="switch-btn swiper-agents-next">
                         <ArrowBackIosNewOutlined />
                     </Box>
-                    </Stack>
+                </Stack>
 
             </Stack>
         </Stack>

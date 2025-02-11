@@ -304,14 +304,26 @@
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
+                    .logo{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 5px;
+                        img{
+                            width: 50px;
+                            cursor: pointer;
+                        }
+                        .title {
+                            color: #bebdbd;
+                            font-size: 35px;
+                            font-family: Tahoma, sans-serif;
+                            font-weight: 700;
+                            margin-left: 4px; 
+                        }
+                    }
                     .footer-box {
                         display: flex;
                         flex-direction: column;
-                        .logo {
-                            width: 128px;
-                            height: 52px;
-                            cursor: pointer;
-                        }
                         span {
                             color: #bebdbd;
                             font-family: $font;
@@ -331,7 +343,7 @@
                         }
                         .media-box {
                             margin-top: 12px;
-                            color: #929495;
+                            color: #0ca5f1;
                             svg {
                                 font-size: 32px;
                                 margin-right: 22px;
