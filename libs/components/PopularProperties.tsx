@@ -1,8 +1,9 @@
 
-import { Box, Divider, Stack } from "@mui/material";
+import { Box,  Stack } from "@mui/material";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import PopularPropertyCard from "./PopularPropertyCard";
+import PopularPropertyCard from "./PopularProductCard";
+import ProductCard from "./property/ProductCard";
 
 const PopularProperties = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
     const [popularProperties, setPopularProperties] = useState<number[]>(initialInput);
@@ -33,7 +34,7 @@ const PopularProperties = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: a
                 popularProperties?.map((property, index) => {
                     return (
                         <SwiperSlide key={index} className="popular-property-slide">
-                  <PopularPropertyCard />
+                  <ProductCard />
                 </SwiperSlide>
                     )
                 })

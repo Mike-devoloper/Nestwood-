@@ -22,11 +22,12 @@ const Filter = () => {
           end: 250000,
         });
         const propertySquare = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
+        const category = ["Sofa-Wardrobe", "Round Table", "Chair", "Dining Table", "Lighting Craft", "Drawers", "Wardrobe"]
       
     return (
         <Stack className="filter-main">
             <Stack className="find-your-home" mb="30px">
-                <Typography className="title-main">Find your Home</Typography>
+                <Typography className="title-main">Filter By Category</Typography>
                 <Stack className="input-box">
                     <OutlinedInput
                     value={searchText}
@@ -45,21 +46,21 @@ const Filter = () => {
             </Stack>
             <Stack className="find-your-home" mb="30px">
                 <p className="title" style={{textShadow: "0px 3px 4px #b9b9b9"}}>
-                    Location
+                    Category
                 </p>
                 <Stack className="property-location" style={{textShadow: "0px 3px 4px #b9b9b9"}}>
-                {["SEOUL", "DAEGU", "BUSAN"].map((location: string) => {
+                {category.map((category: string) => {
                     return (
-                        <Stack className={"input-box"} key={location}>
+                        <Stack className={"input-box"} key={category}>
                             <Checkbox
                             id="location"
                             className="property-checkbox"
                             color="default"
                             size="small"
-                            value={location}
+                            value={category}
                             checked={false}/>
-                            <label htmlFor={location} style={{cursor: "pointer"}}>
-                                <Typography className="property-type">{location}</Typography>
+                            <label htmlFor={category} style={{cursor: "pointer"}}>
+                                <Typography className="property-type">{category}</Typography>
                             </label>
                         </Stack>
                     )
@@ -67,178 +68,21 @@ const Filter = () => {
             </Stack>
             </Stack>
             <Stack className="find-your-home" mb="30px">
-                <Typography className="title">Property Type</Typography>
-                {["APARTMENT", "HOUSE", "VILLA"].map((type: string) => (
-                 <Stack className="input-box" key={type}>
+                <Typography className="title">Filter by Size</Typography>
+                {["Large", "Medium", "Small"].map((size: string) => (
+                 <Stack className="input-box" key={size}>
                     <Checkbox
-                        id={type}
+                        id={size}
                         className="property-checkbox"
                         color="default"
                         size="small"
-                        value={type}
+                        value={size}
                     />
                     <label style={{ cursor: "pointer" }}>
-                        <Typography className="property-type">{type}</Typography>
+                        <Typography className="property-type">{size}</Typography>
                     </label>
                 </Stack>
                 ))}
-            </Stack>
-            <Stack className="find-your-home" mb="30px">
-                <Typography className="title">Rooms</Typography>
-                <Stack className="button-group">
-                    <Button
-                    sx={{
-                        borderRadius: "12px 0 0 12px",
-                        border: "1px solid #b9b9b9"
-                    }}>
-                        Any
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: 0,
-                        border: "1px solid #b9b9b9"
-                    }}>
-                        1
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: 0,
-                        border: "2px solid #181A20"
-                    }}>
-                        2
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: 0,
-                        border: "1px solid #b9b9b9"
-                    }}>
-                        3
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: 0,
-                        border: "2px solid #181A20"
-                    }}>
-                        4
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: "0 12px 12px 0",
-                        border: "1px solid #b9b9b9"
-                    }}>
-                        5+
-                    </Button>
-                </Stack>
-            </Stack>
-            <Stack className="find-your-home" mb="30px">
-                <Typography className="title">Bed Rooms</Typography>
-                <Stack className="button-group">
-                    <Button
-                    sx={{
-                        borderRadius: "12px 0 0 12px",
-                        border: "1px solid #b9b9b9"
-                    }}>
-                        Any
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: 0,
-                        border: "1px solid #b9b9b9"
-                    }}>
-                        1
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: 0,
-                        border: "2px solid #181A20"
-                    }}>
-                        2
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: 0,
-                        border: "1px solid #b9b9b9"
-                    }}>
-                        3
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: 0,
-                        border: "2px solid #181A20"
-                    }}>
-                        4
-                    </Button>
-                    <Button
-                    sx={{
-                        borderRadius: "0 12px 12px 0",
-                        border: "1px solid #b9b9b9"
-                    }}>
-                        5+
-                    </Button>
-                </Stack>
-            </Stack>
-            <Stack className="find-your-home" mb={"30px"}>
-                <Typography className="title">Options</Typography>
-                <Stack className="input-box">
-                    <Checkbox
-                    id="Barter"
-                    className="property-checkbox"
-                    color="default"
-                    size="small"
-                    value="propertyBarter"
-                    />
-                    <label htmlFor="Barter" style={{ cursor: "pointer" }}>
-                    <Typography className="property-type">Barter</Typography>
-                    </label>
-                </Stack>
-                <Stack className="input-box">
-                    <Checkbox
-                    id="Rent"
-                    className="property-checkbox"
-                    color="default"
-                    size="small"
-                    value="propertyRent"
-                    />
-                    <label htmlFor="Rent" style={{ cursor: "pointer" }}>
-                    <Typography className="property-type">Rent</Typography>
-                    </label>
-                </Stack>
-            </Stack>
-            <Stack className="find-your-home" mb={"30px"}>
-                <Typography className="title">Square meter</Typography>
-                <Stack className="square-year-input">
-                    <FormControl>
-                    <InputLabel id="demo-simple-select-label">Min</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={0}
-                        label="Min"
-                    >
-                        {propertySquare.map((square: number) => (
-                        <MenuItem value={square} key={square}>
-                            {square}
-                        </MenuItem>
-                        ))}
-                    </Select>
-                    </FormControl>
-                    <div className="central-divider"></div>
-                    <FormControl>
-                    <InputLabel id="demo-simple-select-label">Max</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={500}
-                        label="Max"
-                    >
-                        {propertySquare.map((square: number) => (
-                        <MenuItem value={square} key={square}>
-                            {square}
-                        </MenuItem>
-                        ))}
-                    </Select>
-                    </FormControl>
-                </Stack>
             </Stack>
             <Stack className="find-your-home">
                 <Typography className="title">Price Range</Typography>
