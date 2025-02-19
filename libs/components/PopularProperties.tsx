@@ -2,7 +2,6 @@
 import { Box,  Stack } from "@mui/material";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import PopularPropertyCard from "./PopularProductCard";
 import ProductCard from "./property/ProductCard";
 
 const PopularProperties = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
