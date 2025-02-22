@@ -26,7 +26,7 @@ export function ImageSlider() {
     setTextVisible(false); 
     const textAnimationTimer = setTimeout(() => {
       setTextVisible(true); 
-    }, 1000);
+    }, 1500);
 
     return () => clearTimeout(textAnimationTimer); 
   }, [imageIndex]);
@@ -85,11 +85,11 @@ export function ImageSlider() {
        <Box
           className={`image-text ${textVisible ? "slide-in" : ""}`}
         >
-          <p style={{fontSize: "12px", color: "orange", fontWeight: "bold"}}>Limited time offer</p>
+          <p style={{fontSize: "12px", color: "orange", fontWeight: "550"}}>Limited time offer</p>
           <h1>
             {texts[imageIndex].split(' ').map((word, i) => (
               i === 0 ? 
-                <span key={i} style={{ fontSize: "35px", fontWeight: "bold", color: "#fff"}}>{word}</span>
+                <span key={i} style={{ fontSize: "35px", fontWeight: "550", color: "#fff"}}>{word}</span>
                 : ` ${word}`
             ))}
           </h1>

@@ -1,7 +1,8 @@
-@import "/scss/variables.scss";
-@import "/scss/pc/homepage/homepage.scss";
-@import "/scss/pc/property/property.scss";
-@import "/scss/pc/property/detail.scss";
+@import "../variables.scss";
+@import "../pc/homepage/homepage.scss";
+@import "../pc/property/property.scss";
+@import "../pc/property/detail.scss";
+@import "../pc/account/join.scss";
 
 #pc-wrap {
     #top {
@@ -94,6 +95,10 @@
                         line-height: normal;
                         color: #000;
                     }
+                    &:hover {
+                        background-color: rgba(245, 15, 15, 0.09);
+                        transition: all ease-in 5ms;
+                    }
                 }
                 .login-user {
                     img{
@@ -116,7 +121,7 @@
            }
            .navbar-bottom {
             margin-top: 30px;
-            border-top: 1px solid black;
+            border-top: 1px solid rgb(12, 11, 11, 0.09);
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -157,7 +162,7 @@
                 div {
                     font-size: 16px;
                     font-family: Verdana, Geneva, Tahoma, sans-serif;
-                    font-weight: 600;
+                    font-weight: 500;
                     color: #000;
                 }
                 div:hover {

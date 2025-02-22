@@ -75,7 +75,7 @@ const Top = () => {
                 </Badge>
                 </Box>
                 <Box className={"user-box"}>
-                <Link href={'/account/join'}>
+                <Link href={'/account/register'}>
 					<div className={'join-box'}>
 						<AccountCircleOutlinedIcon />
 							<span>

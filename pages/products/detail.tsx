@@ -10,8 +10,7 @@ import { SyntheticEvent, useState } from "react";
 import TabContext from "@mui/lab/TabContext";
 import AdditionalInfo from "@/libs/components/property/AdditionalTab";
 import Reviews from "@/libs/components/comment/Reviews";
-import { Swiper, SwiperSlide } from "swiper/react";
-import ProductCard from "@/libs/components/property/ProductCard";
+
 
 
 const imagePath = [{ url: "/img/property/furni1.jpg" }, { url: "/img/property/furni2.jpg" }, { url: "/img/property/furni3.jpg" }];
@@ -48,7 +47,7 @@ const colorHandler = (event: SelectChangeEvent) => {
                 <Link href={"/products"}>Product / </Link>
               </Box>
               <div className="detail-title">Detail</div>
-            </Stack>
+          </Stack>
           <Stack className="container">
             <Stack className={"images"}>
               <Stack className={"main-image"}>
