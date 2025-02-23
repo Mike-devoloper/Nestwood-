@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Stack, Box, Divider, Typography, Badge, Rating, Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import { FavoriteOutlined, RemoveRedEyeOutlined } from "@mui/icons-material";
+import { FavoriteOutlined, RemoveRedEyeOutlined,InsertCommentOutlined} from "@mui/icons-material";
 
 const BestSellingProductCard = () => {
   const [value, setValue] = useState<number | null>(2);
@@ -18,6 +18,11 @@ const BestSellingProductCard = () => {
             <Badge color="success" badgeContent={3}>
             <IconButton color={"default"} className={"icon-btn"}>
                     <FavoriteOutlined style={{ color: "red" }} />
+                </IconButton>
+            </Badge>
+            <Badge color="success" badgeContent={4}>
+            <IconButton color={"default"} className={"icon-btn"}>
+                    <InsertCommentOutlined style={{ color: "red" }} />
                 </IconButton>
             </Badge>
             </Box>

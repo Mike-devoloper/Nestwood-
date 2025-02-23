@@ -1,6 +1,7 @@
 import withLayoutBasic from "@/libs/components/layout/LayoutBasic";
 import PopularProductCard from "@/libs/components/PopularProductCard";
 import Filter from "@/libs/components/property/Filter";
+import ProductCard from "@/libs/components/property/ProductCard";
 import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
 import { KeyboardArrowDown } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
@@ -17,13 +18,13 @@ const Property:NextPage = () => {
    } else {
       return (
          <div id="property-list-page" style={{position: "relative"}}>
+            <Stack className="link-box"  spacing={1}>
+              <Box className={"link"}>
+                <Link href={"/"}>Home / </Link>
+              </Box>
+              <div className="detail-title">Products</div>
+          </Stack>
             <Stack className="container">
-               <Box className={"product-link"}>
-                  <Box className={"link-box"}>
-                     <Link href={"/"} className={"link"}>Home / </Link>
-                  </Box>
-                  <h1>Shop</h1>
-               </Box>
                <Box className="right">
                   <Stack className="total-result">
                      <Typography>Showing 5 results of available products</Typography>
@@ -40,7 +41,7 @@ const Property:NextPage = () => {
                      <Stack className="main-config" mb={"76px"}>
                         <Stack className="list-config">
                            {properties.map((property, index) => {
-                              return <PopularProductCard key={index}/>
+                              return <ProductCard key={index}/>
                            })}
                         </Stack>
                         <Stack className="pagination-config">
