@@ -1,5 +1,4 @@
 import withLayoutBasic from "@/libs/components/layout/LayoutBasic";
-import PopularProductCard from "@/libs/components/PopularProductCard";
 import Filter from "@/libs/components/property/Filter";
 import ProductCard from "@/libs/components/property/ProductCard";
 import useDeviceDetect from "@/libs/hooks/useDeviceDetect";

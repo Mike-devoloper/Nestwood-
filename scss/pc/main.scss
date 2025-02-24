@@ -170,6 +170,15 @@
                 }
               }
            }
+           .custom-drawer {
+            .MuiDrawer-paper {
+                width: 600px;
+                background-color: #f8f9fa;
+                padding: 20px;
+                border-radius: 10px 0 0 10px;
+                box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.1);
+              }
+           }
        }
     }
 		

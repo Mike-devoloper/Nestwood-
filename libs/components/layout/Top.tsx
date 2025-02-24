@@ -1,9 +1,10 @@
 import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
-import { alpha, Badge, Box, Button, FormControl, InputLabel, Link, Menu, MenuItem, MenuProps, Select, SelectChangeEvent, styled } from "@mui/material";
+import { Badge, Box,  FormControl, InputLabel, Link,  MenuItem, Select, SelectChangeEvent, } from "@mui/material";
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Stack } from "@mui/system"
 import { useState } from "react";
+import Drawer from "../property/drawer";
 
 
 
@@ -11,6 +12,7 @@ const Top = () => {
     const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
     const device = useDeviceDetect()
     const [category, setCategory] = useState<string>('');
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const languages = [
         { code: "en", label: "English", flag: "/img/flag/langen.png" },
         { code: "kr", label: "Korean", flag: "/img/flag/langkr.png" },
@@ -20,6 +22,9 @@ const Top = () => {
     //HANDLERS 
     const handleChange = (event: SelectChangeEvent) => {
         setCategory(event.target.value);
+      };
+      const toggleDrawer = (open: boolean) => () => {
+        setDrawerOpen(open);
       };
 
       const [selectedLang, setSelectedLang] = useState(languages[0]);
@@ -69,10 +74,10 @@ const Top = () => {
                     <input type="text" name="search" id="search-filter" placeholder="Search products..."/>
                     <button className="search-btn">Search</button>
                 </Box>
-                <Box className={"basket-box"}>
-                <Badge color="secondary" badgeContent={1}>
-                    <img src="/img/icons/basket.svg" alt="basket" />
-                </Badge>
+                <Box className={"basket-box"} onClick={toggleDrawer(true)} sx={{ cursor: "pointer" }}>
+                    <Badge color="secondary" badgeContent={1}>
+                        <img src="/img/icons/basket.svg" alt="basket" />
+                    </Badge>
                 </Box>
                 <Box className={"user-box"}>
                 <Link href={'/account/register'}>
@@ -188,6 +193,7 @@ const Top = () => {
                      </div>
 
                 </Stack>
+                <Drawer open={drawerOpen} toggleDrawer={toggleDrawer} />
                </Stack>
             </Stack>
             )
