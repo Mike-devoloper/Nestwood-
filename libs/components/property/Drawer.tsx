@@ -114,7 +114,7 @@ export default function Drawer({ open, toggleDrawer }: DrawerProps) {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginTop: "400px",
+              marginTop: "350px",
             }}
           >
 

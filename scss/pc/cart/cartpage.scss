@@ -1,0 +1,201 @@
+#pc-wrap {
+    .cart-page {
+        .link-box {
+            width: 100%;
+            height: 150px;
+            background-image: url("/img/property/furni2.jpg");
+            background-color: rgba(24, 26, 32, 0.7);
+            background-blend-mode: darken;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+            .link {
+                color: #fff;
+                margin-top: 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-size: 24px;
+                font-weight: 500;
+            }
+            .detail-title {
+                color: #fff;
+                margin-top: 14px;
+                font-size: 24px;
+                font-weight: 500;
+            }
+          }
+          .container {
+            padding-top: 40px;
+            flex-direction: row;
+            .left {
+                display: flex;
+                flex-direction: column;
+                width: 850px;
+                height: auto;
+                padding-bottom: 50px;
+                padding-right: 15px;
+                .text-box {
+                    display: flex; 
+                    padding: 5px; 
+                    .text {
+                        padding-left: 10px;
+                    }
+                   .info-box {
+                    width: 400px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    margin-left: auto;
+                    padding: 0px 5px 0px 5px;
+                   }    
+
+                }
+                .order-box {
+                    padding: 10px;
+                    display: flex;
+                    flex-direction: row;
+                    .img-box {
+                        width: 320px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        gap: 5px;
+                        img {
+                            width: 70px;
+                            height: 80px;
+                        }
+                        .product-name {
+                            font-size: 14px;
+                            font-weight: 500;
+                            color: rgba(24, 26, 32, 0.5);
+                            cursor: pointer;
+                            &:hover {
+                                color: rgba(24, 26, 32, 1);
+                                transition: all 0.5s ease-out;
+                            }
+                        }
+                       .clear-icon {
+                        font-size: 16px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        color: red;
+                        border-radius: 50%;
+                        &:hover {
+                            background-color: red;
+                            color: #fff;
+                            transition: all 0.4s ease-out;
+                        }
+                       }
+                    }
+                    .order-info {
+                        width: 400px;
+                        padding-bottom: 5px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-left: auto;
+                        .counter {
+                            background-color: rgb(194, 191, 191, 0.4);
+                            width: 100px;
+                            height: 48px;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 8px;
+                            border-radius: 10px;
+                            button {
+                                font-size: 15px;
+                                padding: 10px;
+                                border: none;
+                                background-color: rgb(194, 191, 191, 0.01);
+                                & :hover {
+                                    background-color: rgb(0, 0, 0, 0.8);
+                                    transition: all ease-out;
+                                }
+                            }
+                        }
+                    }
+
+                }
+                .btn-box {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    padding-top: 10px;
+                    .update-btn {
+                        padding: 10px 15px 10px 15px;
+                        background-color: rgb(0, 0, 0, 0.06);
+                        color: rgb(0, 0, 0, 0.5);
+                        font-size: 13px;
+                        font-family: Verdana, Geneva, Tahoma, sans-serif;
+                        font-weight: 550;
+                        &:hover {
+                            background-color: rgb(0, 0, 0, 0.9);
+                            color: rgb(255, 255, 255);
+                            transition: all 0.4s ease-out;
+                        }
+                    }
+                }
+            }
+            .right {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: flex-start;
+                line-height: 2rem;
+                width: 420px;
+                height: 350px;
+                margin-bottom: 70px;
+                padding-left: 20px;
+                border: 1px solid rgb(0, 0, 0, 0.2);
+                .text {
+                    font-size: 20px;
+                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    font-weight: 550;
+                    padding: 10px;
+                }
+                .info-box {
+                    padding-left: 10px;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 55px;
+                    .right-info {
+                        height: auto;
+                        font-size: 14px;
+                        font-weight: 550;
+                    }
+                    .left-info {
+                        width: 200px;
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+                }
+                .btn-box {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    padding-bottom: 40px;
+                    .proceed-btn {
+                        padding: 10px 50px 10px 50px;
+                        background-color: rgb(0, 0, 0, 0.9);
+                        color: rgb(255, 255, 255);
+                        font-size: 13px;
+                        font-family: Verdana, Geneva, Tahoma, sans-serif;
+                        font-weight: 550;
+                        &:hover {
+                            background-color: rgb(0, 0, 0, 0.5);
+                            transition: all 0.4s ease-out;
+                        }
+                    }
+                }
+            }
+          }
+    }
+}
