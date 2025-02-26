@@ -1,0 +1,157 @@
+#pc-wrap {
+    .checkout-page {
+        .link-box {
+            width: 100%;
+            height: 150px;
+            background-color: rgba(24, 26, 32, 0.2);
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+            .link {
+                color: #fff;
+                margin-top: 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-size: 24px;
+                font-weight: 500;
+            }
+            .detail-title {
+                color: #fff;
+                margin-top: 14px;
+                font-size: 24px;
+                font-weight: 500;
+            }
+          }
+          .container {
+            flex-direction: row;
+            padding-top: 40px;
+            .right {
+                width: 650px;
+                height: 900px;
+                padding: 12px;
+                margin-bottom: 100px;
+                display: flex;
+                flex-direction: column;
+                background-color: rgba(24, 26, 32, 0.05);
+                border-radius: 8px;
+                box-shadow: rgb(8, 8, 8, 0.08) 1px 4px 2px 4px ;
+                .text {
+                    font-size: 16px;
+                    font-weight: 550;
+                }
+                .forum-box {
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    .name-box {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 270px;
+                        width: 650px;
+                    }
+                    .input-box {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 40px;
+                        width: 650px;
+                        .name {
+                            width: 45%;
+                        }
+                        .last {
+                            width: 45%;
+                        }
+                    }
+                    input {
+                        padding: 15px;
+                        border-radius: 8px;
+                        border: 1px solid rgba(24, 26, 32, 0.2);
+                        &:focus {
+                            outline: green;
+                            box-shadow: rgb(8, 8, 8, 0.08) 1px 4px 2px 4px ;
+                        } 
+                    } 
+                    span {
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+                }
+            }
+            .left {
+                width: 550px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                .text {
+                    font-size: 16px;
+                    font-weight: 550;
+                    padding-left: 10px;
+                }
+                .order-detail {
+                    .subtotal {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        padding: 10px;
+                        p {
+                            font-size: 14px;
+                            font-weight: 500;
+                            padding-right: 15px;
+                        }
+                    }
+                }
+                .payment-box {
+                    padding-top: 20px;
+                    width: 550px;
+                    height: 500px;
+                    background-color: rgba(24, 26, 32, 0.05);
+                    border-radius: 5px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 10px;
+                    box-shadow: rgb(8, 8, 8, 0.08) 1px 4px 2px 4px ;
+                    .pay-type {
+                        width: 530px;
+                        height: 45px;
+                        background-color: #fff;
+                        border-radius: 5px;
+                        span {
+                            font-size: 14px;
+                            font-weight: 550;
+                        }
+                    }
+                    p {
+                        font-size: 13px;
+                        font-weight: 500;
+                        line-height: 1.4;
+                        text-align: left;
+                        padding-left: 10px;
+                    }
+                    .cash-text {
+                        width: 550px;
+                        padding-left: 10px;
+                        text-align: left;
+                    }
+                    .place-order {
+                        top: 80px;
+                        width: 400px;
+                        background-color: rgba(24, 26, 32);
+                        color: #fff;
+                        padding: 10px 100px 10px 100px;
+                        font-size: 16px;
+                        font-weight: 550;
+                    }
+                }
+            }
+          }
+    }
+}
