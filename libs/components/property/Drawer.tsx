@@ -65,7 +65,16 @@ export default function Drawer({ open, toggleDrawer }: DrawerProps) {
                 height: "8px",
                 color: "red",
             }}>
-            <ClearOutlinedIcon sx={{fontSize: "14px"}}/>
+           <ClearOutlinedIcon 
+              sx={{
+                fontSize: "14px",
+                cursor: "pointer", 
+                transition: "color 0.2s ease-in-out", 
+                "&:hover": {
+                  color: "red", 
+                },
+              }} 
+            />
             </Box>
           </Box>
       
@@ -102,7 +111,16 @@ export default function Drawer({ open, toggleDrawer }: DrawerProps) {
                 height: "8px",
                 color: "red",
             }}>
-            <ClearOutlinedIcon sx={{fontSize: "14px"}}/>
+            <ClearOutlinedIcon 
+              sx={{
+                fontSize: "14px",
+                cursor: "pointer", 
+                transition: "color 0.2s ease-in-out", 
+                "&:hover": {
+                  color: "red", 
+                },
+              }} 
+            />
             </Box>
           </Box>
       
