@@ -9,7 +9,8 @@ import Link from "next/link";
 import { SyntheticEvent, useState } from "react";
 import TabContext from "@mui/lab/TabContext";
 import AdditionalInfo from "@/libs/components/property/AdditionalTab";
-import Reviews from "@/libs/components/comment/Reviews";
+import Reviews from "@/libs/components/common/Reviews";
+
 
 
 

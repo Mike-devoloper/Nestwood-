@@ -45,11 +45,11 @@ const MyMenu = () => {
 						</Typography>
 						<List className={'sub-section'}>
 								<>
-									<ListItem className={pathname === 'addProperty' ? 'focus' : ''}>
+									<ListItem className={pathname === 'addProduct' ? 'focus' : ''}>
 										<Link
 											href={{
 												pathname: '/mypage',
-												query: { category: 'addProperty' },
+												query: { category: 'addProduct' },
 											}}
 											scroll={false}
 										>
@@ -60,7 +60,7 @@ const MyMenu = () => {
 													<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
 												
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													Add Property
+													Add Product
 												</Typography>
 												<IconButton aria-label="delete" sx={{ ml: '40px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
@@ -68,9 +68,12 @@ const MyMenu = () => {
 											</div>
 										</Link>
 									</ListItem>
-							    	<ListItem className={pathname === 'myProperties' ? 'focus' : ''}>
+							    	<ListItem className={pathname === 'myProducts' ? 'focus' : ''}>
 										<Link
-											href={"/myPage/myProperies"}
+											href={{
+												pathname: '/mypage',
+												query: { category: 'myProducts' },
+											}}
 											scroll={false}
 										>
 											<div className={'flex-box'}>
@@ -80,7 +83,7 @@ const MyMenu = () => {
 													<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
 												
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													My Properties
+													My Products
 												</Typography>
 												<IconButton aria-label="delete" sx={{ ml: '36px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
@@ -245,7 +248,7 @@ const MyMenu = () => {
 									>
 										<div className={'flex-box'}>
 									
-												<img className={'com-icon'} src={'/img/icons/discoveryWhite.svg'} alt={'com-icon'} />
+												{/* <img className={'com-icon'} src={'/img/icons/discoveryWhite.svg'} alt={'com-icon'} /> */}
 											
 												<img className={'com-icon'} src={'/img/icons/discovery.svg'} alt={'com-icon'} />
 										
@@ -266,7 +269,7 @@ const MyMenu = () => {
 									>
 										<div className={'flex-box'}>
 											
-												<img className={'com-icon'} src={'/img/icons/whiteTab.svg'} alt={'com-icon'} />
+												{/* <img className={'com-icon'} src={'/img/icons/whiteTab.svg'} alt={'com-icon'} /> */}
 										
 												<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
 											
