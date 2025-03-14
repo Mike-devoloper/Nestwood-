@@ -5,14 +5,19 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { Stack } from "@mui/system"
 import { useState } from "react";
 import Drawer from "../property/drawer";
+import CategoryModal from "../common/CategoryModal";
 
 
 
 const Top = () => {
     const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
     const device = useDeviceDetect()
+    const [open, setOpen] = useState(false);
     const [category, setCategory] = useState<string>('');
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const modalOpen = () => setOpen(true);
+    const modalClose = () => setOpen(false);
+
     const languages = [
         { code: "en", label: "English", flag: "/img/flag/langen.png" },
         { code: "kr", label: "Korean", flag: "/img/flag/langkr.png" },
@@ -92,25 +97,7 @@ const Top = () => {
                 </Stack>
                 <Stack className={"navbar-bottom"}>
                     <Box component={'div'} className={'selector'}>
-                      <FormControl sx={{ width: 200, height: 20 }} size="small">
-                        <InputLabel className="label">Shop by Category</InputLabel>
-                        <Select
-                            labelId="demo-select-small-label"
-                            className="custom-select"
-                            value={category}
-                            label="Category"
-                            IconComponent={ViewHeadlineIcon}
-                            onChange={handleChange}>
-                                 <MenuItem value="" disabled>
-                                    Shop by Category
-                                </MenuItem>             
-                            <MenuItem value={"Chair"}  className="menu-item-text">Chair</MenuItem>
-                            <MenuItem value={"Dining Table"}  className="menu-item-text">Dining Table</MenuItem>
-                            <MenuItem value={"Round Table"}  className="menu-item-text">Round Table</MenuItem>
-                            <MenuItem value={"Sofa-Bed"}  className="menu-item-text">Sofa-Bed</MenuItem>
-                            <MenuItem value={"Wardrobe"}  className="menu-item-text">Wardrobe</MenuItem>
-                        </Select>
-                        </FormControl>
+                     <CategoryModal  modalOpen={modalOpen} modalClose={modalClose} open={open} />
                     </Box>
                      <Box component={'div'} className={'router-box'}>
 							<Link href={'/'}>

@@ -14,6 +14,7 @@ import "swiper/css/pagination"
 import "swiper/css/navigation"
 import CallToAction from "@/libs/components/CallToAction";
 import Boardhighlights from "@/libs/components/BoardHighlights";
+import Brands from "@/libs/components/Brands";
 const Home: NextPage = () => {
   //MOBILE Device or PC
   const device = useDeviceDetect()
@@ -48,6 +49,7 @@ const Home: NextPage = () => {
         <Advertisement/>
         <CallToAction/>
         <BestSellingProducts/>
+        <Brands/>
         <TopAgents/>
         <Boardhighlights/>
       </Stack>

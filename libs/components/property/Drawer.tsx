@@ -67,11 +67,15 @@ export default function Drawer({ open, toggleDrawer }: DrawerProps) {
             }}>
            <ClearOutlinedIcon 
               sx={{
-                fontSize: "14px",
-                cursor: "pointer", 
-                transition: "color 0.2s ease-in-out", 
+                fontSize: "16px",
+                fontWeight: "600",
+                cursor: "pointer",
+                color: "red",
+                borderRadius:" 50%",
                 "&:hover": {
-                  color: "red", 
+                  backgroundColor: "red",
+                  color: "#fff",
+                  transition:" all 0.4s ease-out"
                 },
               }} 
             />
@@ -81,48 +85,6 @@ export default function Drawer({ open, toggleDrawer }: DrawerProps) {
       
           <Divider sx={{ marginTop: "20px" }} />
       
-          <Box sx={{ padding: "8px", display: "flex", alignItems: "center" }}>
-            <img
-              style={{ width: "70px", height: "75px" }}
-              className="order-img"
-              src="/img/property/furni1.jpg"
-            />
-            <div className="name-box" 
-            style={{
-                width: "220px",
-                marginLeft: "10px",
-                display: "flex",
-                flexDirection: "column",
-                lineHeight: "2rem"
-            }}>
-                <a href="/products/detail" className="order-name" 
-                style={{  
-                    color: "rgba(0, 0, 0, 0.8)", 
-                    fontSize: "15px",
-                    fontWeight: "500",
-                    }}>
-                     Nideo wooden chair
-                </a>
-                <p style={{fontSize: "14px", fontWeight: "550"}}>2 x $79.00</p>
-            </div>
-            <Box className={"clear-btn"} 
-            sx={{
-                width: "8px",
-                height: "8px",
-                color: "red",
-            }}>
-            <ClearOutlinedIcon 
-              sx={{
-                fontSize: "14px",
-                cursor: "pointer", 
-                transition: "color 0.2s ease-in-out", 
-                "&:hover": {
-                  color: "red", 
-                },
-              }} 
-            />
-            </Box>
-          </Box>
       
           <Stack
             className="info-box"

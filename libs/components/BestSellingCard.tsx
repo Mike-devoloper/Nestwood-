@@ -32,7 +32,7 @@ const BestSellingProductCard = () => {
             <Box sx={{ '& > legend': { mt: 2 } }}>
                 <Rating
                 name="simple-controlled"
-                sx={{color:"#000"}}
+                sx={{color:"orange"}}
                 value={value}
                 onChange={(event, newValue) => {
                 setValue(newValue);

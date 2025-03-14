@@ -619,6 +619,36 @@
           }
         }
     }
+    .brands-frame {
+      display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+        gap: 3px;
+        width: 100%;
+        height: 250px;
+        line-height: 1.5rem;
+        transform: perspective(0px);
+        .ad-box{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 250px;
+          height: 220px;
+          background-color: #fff;
+          border-radius: 30px;
+          transition: all 0.3s ease-out;
+          &:hover {
+            box-shadow: -2px 0px 20px 14px rgb(101, 90, 90, 0.4);
+          }
+        }
+        img {
+          height: 200px;
+          width: 220px;
+          border-radius: 30px;
+        }
+    }
     .top-agents {
         position: relative;
         padding: 100px 0px 135px;
@@ -626,7 +656,7 @@
         height: 720px;
         display: flex;
         flex-direction: row;
-        background: #f6f6f6;
+        background: #fff;
         .container {
             position: relative;
             flex-direction: column;
@@ -645,7 +675,7 @@
                     align-items: center;
                     justify-content: center;
                     border-radius: 50%;
-                    background: #ffffff;
+                    background: orange;
                     filter: drop-shadow(0px 10px 35px rgba(5, 16, 54, 0.1));
                     cursor: pointer;
                     svg {
@@ -658,12 +688,12 @@
                 }
                 .card-wrapper {
                     width: 1174px;
-                    height: 280px;
+                    height: 380px;
                     display: flex;
                     flex-direction: row;
                     .top-agents-swiper {
                         width: 99.7%;
-                        height: 280px;
+                        height: 300px;
                         display: flex;
                         flex-direction: row;
                         .top-agents-slide {
@@ -679,6 +709,7 @@
                         flex-direction: column;
                         border-radius: 15px;
                         box-shadow: 0px 1px 4px 4px rgba(24, 26, 32, 0.07);
+                        background-color: #fff;
                         img {
                             width: 209px;
                             height: 209px;

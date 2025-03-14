@@ -1,6 +1,7 @@
 import { ArrowBackIosNewOutlined } from "@mui/icons-material";
 import { Box, Stack } from "@mui/material";
 import { useState } from "react";
+import { Autoplay, Navigation, Pagination } from "swiper";
 import { SwiperSlide,Swiper } from "swiper/react";
 import TopAgentCard from "./TopAgentCard";
 
@@ -24,6 +25,7 @@ const TopAgents = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
                         className="top-agents-swiper"
                         slidesPerView={"auto"}
                         spaceBetween={29}
+                        modules={[ Navigation, Pagination, Autoplay]}
                         navigation={{
                             nextEl: ".swiper-agents-next",
                             prevEl: ".swiper-agents-prev",
@@ -32,7 +34,7 @@ const TopAgents = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
                         {topAgents.map((agent, index) => {
                             return (
                             <SwiperSlide className="top-agents-slide" key={index}>
-                                <TopAgentCard />
+                                <TopAgentCard/>
                             </SwiperSlide>
                             );
                         })}
