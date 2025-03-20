@@ -53,18 +53,18 @@ const AgentCard = (props: AgentCardProps) => {
 						<Link
 							href={{
 								pathname: '/agent/detail',
-								query: { agentId: 'id' },
+								// query: { agentId: 'id' },
 							}}
 						>
 							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
 						</Link>
-						<span>Agent</span>
+						<span>Mike</span>
 					</Box>
 					<Box component={'div'} className={'buttons'}>
 						<IconButton color={'default'}>
 							<RemoveRedEyeIcon />
 						</IconButton>
-						<Typography className="view-cnt">{agent?.memberViews}</Typography>
+						<Typography className="view-cnt">{40}</Typography>
 						<IconButton color={'default'}>
 							{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
 								<FavoriteIcon color={'primary'} />
@@ -72,7 +72,7 @@ const AgentCard = (props: AgentCardProps) => {
 								<FavoriteBorderIcon />
 							)}
 						</IconButton>
-						<Typography className="view-cnt">{agent?.memberLikes}</Typography>
+						<Typography className="view-cnt">{20}</Typography>
 					</Box>
 				</Stack>
 			</Stack>
