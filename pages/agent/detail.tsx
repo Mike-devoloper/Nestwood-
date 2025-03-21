@@ -24,7 +24,7 @@ const AgentDetail: NextPage = () => {
 	const [agentId, setAgentId] = useState<string | null>(null);
 	// const [agent, setAgent] = useState<Member | null>(null);
 	// const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
-	const [agentProperties, setAgentProperties] = useState<Property[]>([]);
+	const [agentProperties, setAgentProperties] = useState<number[]>([1,2,3,4]);
 	const [propertyTotal, setPropertyTotal] = useState<number>();
 	// const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
 	const [agentComments, setAgentComments] = useState<number[]>([1, 2, 3, 4]);
@@ -196,8 +196,8 @@ const AgentDetail: NextPage = () => {
 						<Stack className={'card-wrap'}>
 							{agentProperties.map((property, id) => {
 								return (
-									<div className={'wrap-main'} key={property._id}>
-										<ProductCard  key={id}/>
+									<div className={'wrap-main'} >
+										<ProductCard  key={property}/>
 									</div>
 								);
 							})}
