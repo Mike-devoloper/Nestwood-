@@ -1,29 +1,25 @@
 import {gql} from "@apollo/client"
 
 /******************
-    * PROPERTY *
+    * PRODUCT *
 ********************/
 
-export  const GET_PROPERTIES = gql`query GetProperties($input: PropertiesInquiry!) {
-    getProperties(input: $input) {
+export  const GET_PRODUCTS = gql`query GetProducts ($input: ProductsInquiry!){
+    getProducts(input: $input) {
         list {
             _id
-            propertyType
-            propertyStatus
-            propertyLocation
-            propertyAddress
-            propertyTitle
-            propertyPrice
-            propertySquare
-            propertyBeds
-            propertyLikes
-            propertyRank
-            propertyViews
-            propertyComments
-            propertyImages
-            propertyDesc
-            propertyBarter
-            propertyRent
+            productType
+            productStatus
+            productSize
+            productAddress
+            productName
+            productPrice
+            productLikes
+            productRank
+            productViews
+            productComments
+            productImages
+            productDesc
             memberId
             soldAt
             deletedAt
@@ -42,7 +38,7 @@ export  const GET_PROPERTIES = gql`query GetProperties($input: PropertiesInquiry
                 memberImage
                 memberAddress
                 memberDesc
-                memberProperties
+                memberProducts
                 memberFollowers
                 memberFollowings
                 memberArticle
@@ -57,12 +53,11 @@ export  const GET_PROPERTIES = gql`query GetProperties($input: PropertiesInquiry
                 updatedAt
                 createdAt
                 accessToken
-            }
-            propertyRooms
-            meLiked {
-                memberId
-                likeRefId
-                myFavorite
+                meLiked {
+                    memberId
+                    likeRefId
+                    myFavorite
+                }
             }
         }
         metaCounter {

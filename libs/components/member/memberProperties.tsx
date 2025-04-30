@@ -6,7 +6,7 @@ import { PropertyCard } from '../mypage/PropertyCard';
 import { Property } from '../../types/property/property';
 import { PropertiesInquiry } from '../../types/property/property.input';
 import { useRouter } from 'next/router';
-import { GET_PROPERTIES } from '../../../apollo/user/query';
+import { GET_PRODUCTS } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { T } from '@/libs/types/config';
 

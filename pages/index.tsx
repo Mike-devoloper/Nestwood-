@@ -7,7 +7,7 @@ import Advertisement from "@/libs/components/Advertisement";
 import BestSellingProducts from "@/libs/components/BestSellingProducts";
 import TopAgents from "@/libs/components/TopAgent";
 import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
-import { GET_PROPERTIES } from "@/apollo/user/query";
+import { GET_PRODUCTS } from "@/apollo/user/query";
 import { useQuery } from "@apollo/client";
 import "swiper/css"
 import "swiper/css/pagination"
@@ -19,24 +19,24 @@ const Home: NextPage = () => {
   //MOBILE Device or PC
   const device = useDeviceDetect()
 
-  const {
-    loading: getPropertiesLoading,
-    data: getPropertiesData,
-    error: getPropertiesError,
-    refetch: getPropertiesRefetch,
-  } = useQuery(GET_PROPERTIES, {
-    fetchPolicy: "network-only",
-    variables: {
-      input: {
-        page: 1,
-        limit: 5,
-        sort: "createdAt",
-        direction: "DESC",
-        search: {},
-      },
-    },
-  });
-  console.log("getProperties =>", getPropertiesData);
+  // const {
+  //   loading: getPropertiesLoading,
+  //   data: getPropertiesData,
+  //   error: getPropertiesError,
+  //   refetch: getPropertiesRefetch,
+  // } = useQuery(GET_PRODUCTS, {
+  //   fetchPolicy: "network-only",
+  //   variables: {
+  //     input: {
+  //       page: 1,
+  //       limit: 5,
+  //       sort: "createdAt",
+  //       direction: "DESC",
+  //       search: {},
+  //     },
+  //   },
+  // });
+  // console.log("getProperties =>", getPropertiesData);
   
 
   if(device === "mobile") {

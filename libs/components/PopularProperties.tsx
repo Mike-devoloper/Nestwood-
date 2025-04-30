@@ -1,11 +1,42 @@
 
+
+import { GET_PRODUCTS } from "@/apollo/user/query";
+import { useQuery } from "@apollo/client";
 import { Box,  Stack } from "@mui/material";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { T } from "../types/config";
 import ProductCard from "./property/ProductCard";
 
+
+
 const PopularProperties = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
-    const [popularProperties, setPopularProperties] = useState<number[]>(initialInput);
+    const [popularProducts, setPopularProducts] = useState<number[]>(initialInput);
+
+    const {
+      loading: getProductsLoading,
+      data: getProductsData,
+      error: getProductsError,
+      refetch: getProductsRefetch,
+    } = useQuery(GET_PRODUCTS, {
+      fetchPolicy: "network-only",
+      variables: {
+        input: {
+          page: 1,
+          limit: 5,
+          sort: "createdAt",
+          direction: "DESC",
+          search: {},
+        },
+      },
+      notifyOnNetworkStatusChange: true,
+      onCompleted(data: T) {
+        setPopularProducts(data?.getProducts?.list)
+      },
+    });
+    console.log("getProducts =>", getProductsData);
+    
+    
   
     return (
       <Stack className="newest-products">
@@ -26,11 +57,11 @@ const PopularProperties = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: a
                 prevEl: ".swiper-popular-prev",
               }}
               pagination={{
-                el: ".swiper-popular-pagination",
+                el: ".swiper-popular-pagination", 
               }}
             >
               {
-                popularProperties?.map((property, index) => {
+                popularProducts?.map((product: any, index: any) => {
                     return (
                         <SwiperSlide key={index} className="popular-property-slide">
                   <ProductCard />
