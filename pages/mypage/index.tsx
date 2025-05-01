@@ -4,16 +4,16 @@ import { NextPage } from 'next';
 import { Box, Link, Stack } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import MyMenu from '@/libs/components/mypage/MyMenu';
-import AddProduct from '@/libs/components/mypage/AddProduct';
-import MyProfile from '@/libs/components/mypage/MyProfile';
-import MyProducts from '@/libs/components/mypage/MyProducts';
-import MyFavorites from '@/libs/components/mypage/MyFavorites';
-import RecentlyVisited from '@/libs/components/mypage/RecentlyVisited';
-import MemberFollowers from '@/libs/components/member/MemberFollowers';
-import MyArticles from '@/libs/components/mypage/MyArticles';
-import MemberFollowings from '@/libs/components/member/MemberFollowing';
-import WriteArticle from '@/libs/components/mypage/WriteArticle';
+import MyMenu from '../../libs/components/mypage/MyMenu';
+import AddProduct from '../../libs/components/mypage/AddProduct';
+import MyProfile from '../../libs/components/mypage/MyProfile';
+import MyProducts from '../../libs/components/mypage/MyProducts';
+import MyFavorites from '../../libs/components/mypage/MyFavorites';
+import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
+import MemberFollowers from '../../libs/components/member/MemberFollowers';
+import MyArticles from '../../libs/components/mypage/MyArticles';
+import MemberFollowings from '../../libs/components/member/MemberFollowing';
+import WriteArticle from '../../libs/components/mypage/WriteArticle';
 
 
 // export const getStaticProps = async ({ locale }: any) => ({

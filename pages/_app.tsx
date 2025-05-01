@@ -5,7 +5,7 @@ import { CssBaseline } from "@mui/material";
 import {light} from "../scss/MaterialTheme/index"
 import { useState } from "react";
 import { ApolloProvider } from "@apollo/client";
-import {useApollo} from "@/apollo/client";
+import {useApollo} from "../apollo/client";
 import "../scss/app.scss";
 import "../scss/pc/main.scss";
 import "../scss/mobile/main.scss"

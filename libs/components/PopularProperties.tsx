@@ -1,6 +1,6 @@
 
 
-import { GET_PRODUCTS } from "@/apollo/user/query";
+import { GET_PRODUCTS } from "../../apollo/user/query";
 import { useQuery } from "@apollo/client";
 import { Box,  Stack } from "@mui/material";
 import { useState } from "react";

@@ -9,9 +9,9 @@ import { useRouter } from 'next/router';
 import MemberFollowers from '../../libs/components/member/MemberFollowers';
 // import MemberArticles from '../../libs/components/member/MemberArticles';
 import { useMutation, useReactiveVar } from '@apollo/client';
-import MemberProperties from '@/libs/components/member/memberProperties';
-import MemberFollowings from '@/libs/components/member/MemberFollowing';
-import MemberArticles from '@/libs/components/member/MemberArticles';
+import MemberProperties from '../../libs/components/member/memberProperties';
+import MemberFollowings from '../../libs/components/member/MemberFollowing';
+import MemberArticles from '../../libs/components/member/MemberArticles';
 
 
 // export const getStaticProps = async ({ locale }: any) => ({

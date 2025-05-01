@@ -1,20 +1,20 @@
-import withLayoutMain from "@/libs/components/layout/LayoutHome";
+import withLayoutMain from "../libs/components/layout/LayoutHome";
 import { Stack } from "@mui/material";
 import { NextPage } from "next";
-import Category from "@/libs/components/Category";
-import PopularProperties from "@/libs/components/PopularProperties";
-import Advertisement from "@/libs/components/Advertisement";
-import BestSellingProducts from "@/libs/components/BestSellingProducts";
-import TopAgents from "@/libs/components/TopAgent";
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
-import { GET_PRODUCTS } from "@/apollo/user/query";
+import Category from "../libs/components/Category";
+import PopularProperties from "../libs/components/PopularProperties";
+import Advertisement from "../libs/components/Advertisement";
+import BestSellingProducts from "../libs/components/BestSellingProducts";
+import TopAgents from "../libs/components/TopAgent";
+import useDeviceDetect from "../libs/hooks/useDeviceDetect";
+import { GET_PRODUCTS } from "../apollo/user/query";
 import { useQuery } from "@apollo/client";
 import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
-import CallToAction from "@/libs/components/CallToAction";
-import Boardhighlights from "@/libs/components/BoardHighlights";
-import Brands from "@/libs/components/Brands";
+import CallToAction from "../libs/components/CallToAction";
+import Boardhighlights from "../libs/components/BoardHighlights";
+import Brands from "../libs/components/Brands";
 const Home: NextPage = () => {
   //MOBILE Device or PC
   const device = useDeviceDetect()
