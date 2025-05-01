@@ -1,4 +1,4 @@
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
+import useDeviceDetect from "../../../libs/hooks/useDeviceDetect";
 import { FacebookOutlined, Instagram, Telegram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { Stack } from "@mui/system"

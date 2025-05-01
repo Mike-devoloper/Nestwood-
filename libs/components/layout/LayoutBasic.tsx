@@ -1,4 +1,4 @@
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect"
+import useDeviceDetect from "../../../libs/hooks/useDeviceDetect"
 import { Stack } from "@mui/system"
 import Head from "next/head"
 import Footer from "./Footer"
