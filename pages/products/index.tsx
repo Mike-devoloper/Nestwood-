@@ -1,7 +1,7 @@
-import withLayoutBasic from "@/libs/components/layout/LayoutBasic";
-import Filter from "@/libs/components/property/Filter";
-import ProductCard from "@/libs/components/property/ProductCard";
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
+import withLayoutBasic from "../../libs/components/layout/LayoutBasic";
+import Filter from "../../libs/components/property/Filter";
+import ProductCard from "../../libs/components/property/ProductCard";
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect";
 import { KeyboardArrowDown } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
 import { NextPage } from "next";

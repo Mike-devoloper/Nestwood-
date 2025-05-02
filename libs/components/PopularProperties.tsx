@@ -7,12 +7,16 @@ import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { T } from "../types/config";
 import ProductCard from "./property/ProductCard";
+import { ProductsInquiry } from "../types/property/property.input";
+import { Product } from "../types/property/property";
 
+interface PopularPropertiesProps {
+  initialInput: ProductsInquiry
+}
 
-
-const PopularProperties = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
-    const [popularProducts, setPopularProducts] = useState<number[]>(initialInput);
-
+const PopularProperties = (props: PopularPropertiesProps) => {
+    const [popularProducts, setPopularProducts] = useState<Product[]>([]);
+    const {initialInput} = props;
     const {
       loading: getProductsLoading,
       data: getProductsData,
@@ -21,17 +25,11 @@ const PopularProperties = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: a
     } = useQuery(GET_PRODUCTS, {
       fetchPolicy: "network-only",
       variables: {
-        input: {
-          page: 1,
-          limit: 5,
-          sort: "createdAt",
-          direction: "DESC",
-          search: {},
-        },
+        input: initialInput
       },
       notifyOnNetworkStatusChange: true,
       onCompleted(data: T) {
-        setPopularProducts(data?.getProducts?.list)
+        setPopularProducts(data?.getProducts?.list || [])
       },
     });
     console.log("getProducts =>", getProductsData);
@@ -76,7 +74,15 @@ const PopularProperties = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: a
     );
   };
   
-
+  PopularProperties.defaultProps = {
+    initialInput: {
+      page: 1,
+      limit: 7,
+      sort: 'productViews',
+      direction: 'DESC',
+      search: {},
+    },
+  };
 
 
 export default PopularProperties;
