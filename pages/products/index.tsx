@@ -39,9 +39,9 @@ const Property:NextPage = () => {
                      </Stack>
                      <Stack className="main-config" mb={"76px"}>
                         <Stack className="list-config">
-                           {properties.map((property, index) => {
+                           {/* {properties.map((property, index) => {
                               return <ProductCard key={index}/>
-                           })}
+                           })} */}
                         </Stack>
                         <Stack className="pagination-config">
                            <Stack className="pagination-box">

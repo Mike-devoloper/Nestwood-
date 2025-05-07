@@ -1,3 +1,6 @@
+export const REACT_APP_API_URL = `${process.env.REACT_APP_API_URL}`;
+
+
 export const Messages = {
 	error1: 'Something went wrong!',
 	error2: 'Please login first!',
@@ -5,3 +8,10 @@ export const Messages = {
 	error4: 'Message is empty!',
 	error5: 'Only images with jpeg, jpg, png format allowed!',
 };
+
+
+export enum Direction {
+	DESC = "DESC",
+	ASC = "ASC"
+}
+

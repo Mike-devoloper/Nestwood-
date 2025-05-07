@@ -33,3 +33,12 @@ export interface Member {
 	meFollowed?: MeFollowed[];
 	accessToken?: string;
 }
+
+
+export interface AgentsInquiry {
+	page: number,
+	sort?: string;
+	limit: number;
+	direction?: string;
+	search?: {}
+}

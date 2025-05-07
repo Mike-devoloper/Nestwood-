@@ -2,25 +2,32 @@ import React, { useState } from "react";
 import { Stack, Box, Divider, Typography, Badge, Rating, Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { FavoriteOutlined, RemoveRedEyeOutlined,InsertCommentOutlined} from "@mui/icons-material";
+import { Product } from "libs/types/property/property";
+import { REACT_APP_API_URL } from "libs/config";
 
-const BestSellingProductCard = () => {
+interface BestProductProps {
+    product: Product;
+}
+
+const BestSellingProductCard = (props: BestProductProps) => {
   const [value, setValue] = useState<number | null>(2);
+  const {product} = props;
   return (
     <Stack className="popular-card-box">
         <Box  className="card-img">
-            <img src="/img/property/chair.jpg" alt="product-img"/>
+            <img src={`${REACT_APP_API_URL}/${product.productImages[0]}`} alt="product-img"/>
             <Box className={"eye-icon"}>
-            <Badge color="success" badgeContent={1} className={"badge-box"}>
+            <Badge color="success" badgeContent={product.productViews} className={"badge-box"}>
             <IconButton color="default" className={"icon-btn"}>
                     <RemoveRedEyeOutlined />
             </IconButton>
             </Badge>
-            <Badge color="success" badgeContent={3}>
+            <Badge color="success" badgeContent={product.productLikes}>
             <IconButton color={"default"} className={"icon-btn"}>
                     <FavoriteOutlined style={{ color: "red" }} />
                 </IconButton>
             </Badge>
-            <Badge color="success" badgeContent={4}>
+            <Badge color="success" badgeContent={product.productComments}>
             <IconButton color={"default"} className={"icon-btn"}>
                     <InsertCommentOutlined style={{ color: "red" }} />
                 </IconButton>
@@ -28,7 +35,7 @@ const BestSellingProductCard = () => {
             </Box>
         </Box>
         <Stack className={"info"}>
-            <strong className={"title"}>Nido Lounge Chair</strong>
+            <strong className={"title"}>{product.productName}</strong>
             <Box sx={{ '& > legend': { mt: 2 } }}>
                 <Rating
                 name="simple-controlled"
@@ -38,7 +45,7 @@ const BestSellingProductCard = () => {
                 setValue(newValue);
                 }}
             /></Box>
-            <p className={"price"}>$99.00</p>
+            <p className={"price"}>{product.productPrice}</p>
             
            <Button className="shop-btn">Add to Cart</Button>
         </Stack>

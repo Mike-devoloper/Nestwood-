@@ -1,4 +1,4 @@
-import withLayoutBasic from "@/libs/components/layout/LayoutBasic";
+import withLayoutBasic from "../../libs/components/layout/LayoutBasic";
 import { Box, Divider, Stack } from "@mui/material";
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';

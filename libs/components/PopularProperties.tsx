@@ -3,7 +3,7 @@
 import { GET_PRODUCTS } from "../../apollo/user/query";
 import { useQuery } from "@apollo/client";
 import { Box,  Stack } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { T } from "../types/config";
 import ProductCard from "./property/ProductCard";
@@ -32,7 +32,13 @@ const PopularProperties = (props: PopularPropertiesProps) => {
         setPopularProducts(data?.getProducts?.list || [])
       },
     });
-    console.log("getProducts =>", getProductsData);
+
+    useEffect(() => {
+      if (getProductsData) {
+        console.log("getProductsData updated =>", getProductsData);
+      }
+    }, [getProductsData])
+    
     
     
   
@@ -59,10 +65,10 @@ const PopularProperties = (props: PopularPropertiesProps) => {
               }}
             >
               {
-                popularProducts?.map((product: any, index: any) => {
+                popularProducts?.map((product: Product) => {
                     return (
-                        <SwiperSlide key={index} className="popular-property-slide">
-                  <ProductCard />
+                        <SwiperSlide key={product._id} className="popular-property-slide">
+                  <ProductCard product={product}/>
                 </SwiperSlide>
                     )
                 })

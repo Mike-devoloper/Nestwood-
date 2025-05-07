@@ -67,7 +67,68 @@ export  const GET_PRODUCTS = gql`query GetProducts ($input: ProductsInquiry!){
 }
 `
 
+export const GET_ALL_AGENTS = gql`
+query GetAgents($input: AgentsInquiry!) {
+    getAgents(input: $input) {
+        list {
+            _id
+            memberType
+            memberAuthType
+            memberStatus
+            memberNick
+            memberPhone
+            memberFullName
+            memberImage
+            memberAddress
+            memberDesc
+            memberProducts
+            memberFollowers
+            memberFollowings
+            memberArticle
+            memberViews
+            memberPoints
+            memberLikes
+            memberRank
+            memberWarnings
+            memberComments
+            memberBlocks
+            deletedAt
+            updatedAt
+            createdAt
+            accessToken
+        }
+        metaCounter {
+            total
+        }
+    }
+}`
+
 
 /******************
     * ARTICLE *
 ********************/
+
+
+export const GET_ALL_ARTICLES = gql`
+query GetBoardArticles ($input: BoardArticlesInquiry!) {
+    getBoardArticles(input: $input) {
+        list {
+            _id
+            articleCategory
+            articleStatus
+            articleTitle
+            articleContent
+            articleImage
+            articleViews
+            articleLikes
+            articleComments
+            memberId
+            createdAt
+            updatedAt
+        }
+        metaCounter {
+            total
+        }
+    }
+}
+`

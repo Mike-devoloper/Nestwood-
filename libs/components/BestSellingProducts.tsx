@@ -1,11 +1,37 @@
-import { EastOutlined, WestOutlined } from "@mui/icons-material";
+import { GET_PRODUCTS } from "../../apollo/user/query";
+import { useQuery } from "@apollo/client";
 import { Box, Stack } from "@mui/material";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BestSellingProductCard from "./BestSellingCard";
+import { ProductsInquiry } from "libs/types/property/property.input";
+import { T } from "libs/types/config";
+import { Product } from "libs/types/property/property";
 
-const TopProperties = () => {
-  const [bestSellingProducts, setBestSellingProducts] = useState<number[]>([1, 2, 3, 4, 5, 6, 7]);
+interface TopPropertiesProps {
+  initialInput: ProductsInquiry
+}
+
+const TopProperties = (props: TopPropertiesProps) => {
+  const [bestSellingProducts, setBestSellingProducts] = useState<Product[]>([]);
+
+  const {initialInput} = props;
+  const {
+    loading: getProductsLoading,
+    data: getProductsData,
+    error: getProductsError,
+    refetch: getProductsRefetch,
+  } = useQuery(GET_PRODUCTS, {
+    fetchPolicy: "network-only",
+    variables: {
+      input: initialInput
+    },
+    notifyOnNetworkStatusChange: true,
+    onCompleted(data: T) {
+      setBestSellingProducts(data?.getProducts?.list || [])
+      console.log("BestSelling => ", data?.getProducts?.list || [])
+    },
+  });
 
   return (
     <Stack className="best-products">
@@ -30,10 +56,10 @@ const TopProperties = () => {
           }}
         >
           {
-            bestSellingProducts?.map((property, index) => {
+            bestSellingProducts?.map((product, index) => {
                 return (
                     <SwiperSlide key={index} className="popular-property-slide">
-              <BestSellingProductCard/>
+              <BestSellingProductCard product={product}/>
             </SwiperSlide>
                 )
             })
@@ -43,6 +69,16 @@ const TopProperties = () => {
     </Stack>
   </Stack>
   );
+};
+
+TopProperties.defaultProps = {
+  initialInput: {
+    page: 1,
+    limit: 7,
+    sort: 'productLikes',
+    direction: 'DESC',
+    search: {},
+  },
 };
 
 export default TopProperties;

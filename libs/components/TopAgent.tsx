@@ -1,12 +1,37 @@
+import { useQuery } from "@apollo/client";
 import { ArrowBackIosNewOutlined } from "@mui/icons-material";
 import { Box, Stack } from "@mui/material";
+import { GET_ALL_AGENTS } from "apollo/user/query";
+import { T } from "libs/types/config";
+import { AgentsInquiry, Member } from "libs/types/member/member";
 import { useState } from "react";
 import { Autoplay, Navigation, Pagination } from "swiper";
 import { SwiperSlide,Swiper } from "swiper/react";
 import TopAgentCard from "./TopAgentCard";
 
-const TopAgents = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
-    const [topAgents, setTopAgents] = useState<number[]>(initialInput);
+interface TopAgentsProps {
+    initialInput: AgentsInquiry;
+  }
+
+const TopAgents = (props: TopAgentsProps) => {
+    const [topAgents, setTopAgents] = useState<Member[]>([]);
+    const {initialInput} = props;
+    const {
+        loading: getAgentsLoading,
+      data: getAgentsData,
+      error: getAgentsError,
+      refetch: getAgentsRefetch,
+    } = useQuery(GET_ALL_AGENTS, {
+        fetchPolicy: "network-only",
+      variables: {
+        input: initialInput
+      },
+      notifyOnNetworkStatusChange: true,
+      onCompleted(data: T) {
+        setTopAgents(data?.getAgents?.list || [])
+      },
+    })
+    
     return (
         <Stack className="top-agents">
             <Stack className="container">
@@ -31,10 +56,10 @@ const TopAgents = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
                             prevEl: ".swiper-agents-prev",
                         }}
                         >
-                        {topAgents.map((agent, index) => {
+                        {topAgents.map((agent) => {
                             return (
-                            <SwiperSlide className="top-agents-slide" key={index}>
-                                <TopAgentCard/>
+                            <SwiperSlide className="top-agents-slide" key={agent._id}>
+                                <TopAgentCard member={agent}/>
                             </SwiperSlide>
                             );
                         })}
@@ -49,5 +74,11 @@ const TopAgents = ({ initialInput = [1, 2, 3, 4, 5, 6, 7], ...props }: any) => {
         </Stack>
     )
 }
-
+TopAgents.defaultProps = {
+    initialInput: {
+      page: 1,
+      limit: 7,
+      search: {},
+    },
+  };
 export default TopAgents;

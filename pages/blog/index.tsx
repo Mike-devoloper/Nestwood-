@@ -1,5 +1,5 @@
-import withLayoutBasic from "@/libs/components/layout/LayoutBasic";
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
+import withLayoutBasic from "../../libs/components/layout/LayoutBasic";
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect";
 import { Box, Divider, Link, Pagination, Stack } from "@mui/material";
 import { NextPage } from "next";
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
