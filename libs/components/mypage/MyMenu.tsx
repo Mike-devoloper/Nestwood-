@@ -1,4 +1,4 @@
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
+import useDeviceDetect from "../../../libs/hooks/useDeviceDetect";
 import { Box,  List, ListItem, Stack, Typography } from "@mui/material";
 import PortraitIcon from '@mui/icons-material/Portrait';
 import IconButton from '@mui/material/IconButton';

@@ -1,4 +1,4 @@
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
+import useDeviceDetect from "../../../libs/hooks/useDeviceDetect";
 import { Stack, Typography, Button } from "@mui/material";
 
 const MyProfile = () => {

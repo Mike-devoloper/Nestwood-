@@ -4,13 +4,13 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import IconButton from '@mui/material/IconButton';
 import ModeIcon from '@mui/icons-material/Mode';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Property } from '../../types/property/property';
+import { Product } from '../../types/property/property';
 
 import { useRouter } from 'next/router';
 
 
 interface PropertyCardProps {
-	property: Property;
+	property: Product;
 	deletePropertyHandler?: any;
 	memberPage?: boolean;
 	updatePropertyHandler?: any;

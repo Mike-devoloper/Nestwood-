@@ -4,6 +4,8 @@ import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Link, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
+import { sweetMixinErrorAlert} from 'libs/sweetAlert';
+import { logIn, signUp } from 'libs/auth';
 
 
 // export const getStaticProps = async ({ locale }: any) => ({
@@ -39,25 +41,25 @@ const Join: NextPage = () => {
 		});
 	}, []);
 
-	// const doLogin = useCallback(async () => {
-	// 	console.warn(input);
-	// 	try {
-	// 		await logIn(input.nick, input.password);
-	// 		await router.push(`${router.query.referrer ?? '/'}`);
-	// 	} catch (err: any) {
-	// 		await sweetMixinErrorAlert(err.message);
-	// 	}
-	// }, [input]);
+	const doLogin = useCallback(async () => {
+		console.warn(input);
+		try {
+			await logIn(input.nick, input.password);
+			await router.push(`${router.query.referrer ?? '/'}`);
+		} catch (err: any) {
+			await sweetMixinErrorAlert(err.message);
+		}
+	}, [input]);
 
-	// const doSignUp = useCallback(async () => {
-	// 	console.warn(input);
-	// 	try {
-	// 		await signUp(input.nick, input.password, input.phone, input.type);
-	// 		await router.push(`${router.query.referrer ?? '/'}`);
-	// 	} catch (err: any) {
-	// 		await sweetMixinErrorAlert(err.message);
-	// 	}
-	// }, [input]);
+	const doSignUp = useCallback(async () => {
+		console.warn(input);
+		try {
+			await signUp(input.nick, input.password, input.phone, input.type);
+			await router.push(`${router.query.referrer ?? '/'}`);
+		} catch (err: any) {
+			await sweetMixinErrorAlert(err.message);
+		}
+	}, [input]);
 
 	console.log('+input: ', input);
 
@@ -102,10 +104,10 @@ const Join: NextPage = () => {
 										placeholder={'Enter Password'}
 										onChange={(e) => handleInput('password', e.target.value)}
 										required={true}
-										// onKeyDown={(event) => {
-										// 	if (event.key == 'Enter' && loginView) doLogin();
-										// 	if (event.key == 'Enter' && !loginView) doSignUp();
-										// }}
+										onKeyDown={(event) => {
+											if (event.key == 'Enter' && loginView) doLogin();
+											if (event.key == 'Enter' && !loginView) doSignUp();
+										}}
 									/>
 								</div>
 								{!loginView && (
@@ -116,9 +118,9 @@ const Join: NextPage = () => {
 											placeholder={'Enter Phone'}
 											onChange={(e) => handleInput('phone', e.target.value)}
 											required={true}
-											// onKeyDown={(event) => {
-											// 	if (event.key == 'Enter') doSignUp();
-											// }}
+											onKeyDown={(event) => {
+												if (event.key == 'Enter') doSignUp();
+											}}
 										/>
 									</div>
 								)}
@@ -172,7 +174,7 @@ const Join: NextPage = () => {
 										variant="contained"
 										endIcon={<img src="/img/icons/rightup.svg" alt="" />}
 										disabled={input.nick == '' || input.password == ''}
-										
+										onClick={doLogin}
 									>
 										LOGIN
 									</Button>
@@ -180,7 +182,7 @@ const Join: NextPage = () => {
 									<Button
 										variant="contained"
 										disabled={input.nick == '' || input.password == '' || input.phone == '' || input.type == ''}
-										
+										onClick={doSignUp}
 										endIcon={<img src="/img/icons/rightup.svg" alt="" />}
 									>
 										SIGNUP

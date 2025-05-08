@@ -1,14 +1,15 @@
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
-import { PropertyInput } from "@/libs/types/property/property.input";
+import useDeviceDetect from "../../../libs/hooks/useDeviceDetect";
+import { ProductInput } from "../../../libs/types/property/property.input";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
+import { REACT_APP_API_URL } from "libs/config";
 
 const AddProduct = ({ initialValues, ...props }: any) => {
     const device = useDeviceDetect();
 	const router = useRouter();
 	const inputRef = useRef<any>(null);
-	const [insertPropertyData, setInsertPropertyData] = useState<PropertyInput>(initialValues);
+	const [insertPropertyData, setInsertPropertyData] = useState<ProductInput>(initialValues);
     if (device === 'mobile') {
 		return <div>ADD NEW PROPERTY MOBILE PAGE</div>;
 	} else {
@@ -29,7 +30,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									className="description-input"
 									placeholder={'Title'}
 									onChange={({ target: { value } }) =>
-										setInsertPropertyData({ ...insertPropertyData, propertyTitle: value })
+										setInsertPropertyData({ ...insertPropertyData, productName: value })
 									}
 								/>
 							</Stack>
@@ -43,7 +44,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 										placeholder={'Price'}
 									
 										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, propertyPrice: parseInt(value) })
+											setInsertPropertyData({ ...insertPropertyData, productPrice: parseInt(value) })
 										}
 									/>
 								</Stack>
@@ -107,110 +108,9 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 										placeholder={'Address'}
 										
 										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, propertyAddress: value })
+											setInsertPropertyData({ ...insertPropertyData, productAddress: value })
 										}
 									/>
-								</Stack>
-							</Stack>
-
-							<Stack className="config-row">
-								<Stack className="price-year-after-price">
-									<Typography className="title">Barter</Typography>
-									<select
-										className={'select-description'}
-										
-										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, propertyBarter: value === 'yes' })
-										}
-									>
-										<option disabled={true} selected={true}>
-											Select
-										</option>
-										<option value={'yes'}>Yes</option>
-										<option value={'no'}>No</option>
-									</select>
-									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
-								</Stack>
-								<Stack className="price-year-after-price">
-									<Typography className="title">Rent</Typography>
-									<select
-										className={'select-description'}
-										
-										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, propertyRent: value === 'yes' })
-										}
-									>
-										<option disabled={true} selected={true}>
-											Select
-										</option>
-										<option value={'yes'}>Yes</option>
-										<option value={'no'}>No</option>
-									</select>
-									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
-								</Stack>
-							</Stack>
-
-							<Stack className="config-row">
-								<Stack className="price-year-after-price">
-									<Typography className="title">Rooms</Typography>
-									<select
-										className={'select-description'}
-									
-										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, propertyRooms: parseInt(value) })
-										}
-									>
-										<option disabled={true} selected={true} value={'select'}>
-											Select
-										</option>
-										{[1, 2, 3, 4, 5].map((room: number) => (
-											<option value={`${room}`}>{room}</option>
-										))}
-									</select>
-									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
-								</Stack>
-								<Stack className="price-year-after-price">
-									<Typography className="title">Bed</Typography>
-									<select
-										className={'select-description'}
-										
-										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, propertyBeds: parseInt(value) })
-										}
-									>
-										<option disabled={true} selected={true} value={'select'}>
-											Select
-										</option>
-										{[1, 2, 3, 4, 5].map((bed: number) => (
-											<option value={`${bed}`}>{bed}</option>
-										))}
-									</select>
-									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
-								</Stack>
-								<Stack className="price-year-after-price">
-									<Typography className="title">Square</Typography>
-									<select
-										className={'select-description'}
-										
-										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, propertySquare: parseInt(value) })
-										}
-									>
-										<option disabled={true} selected={true} value={'select'}>
-											Select
-										</option>
-										{/* {propertySquare.map((square: number) => {
-											if (square !== 0) {
-												return <option value={`${square}`}>{square}</option>;
-											}
-										})} */}
-									</select>
-									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 							</Stack>
 
@@ -223,7 +123,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 									className="description-text"
 									
 									onChange={({ target: { value } }) =>
-										setInsertPropertyData({ ...insertPropertyData, propertyDesc: value })
+										setInsertPropertyData({ ...insertPropertyData, productDesc: value })
 									}
 								></textarea>
 							</Stack>
@@ -308,11 +208,11 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 								</Button>
 							</Stack>
 							<Stack className="gallery-box">
-								{insertPropertyData?.propertyImages.map((image: string) => {
-									// const imagePath: string = `${REACT_APP_API_URL}/${image}`;
+								{insertPropertyData?.productImages.map((image: string) => {
+									const imagePath: string = `${REACT_APP_API_URL}/${image}`;
 									return (
 										<Stack className="image-box">
-											<img src={"/img/property/"} alt="" />
+											<img src={imagePath} alt="" />
 										</Stack>
 									);
 								})}
@@ -320,7 +220,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 						</Stack>
 
 						<Stack className="buttons-row">
-							{router.query.propertyId ? (
+							{router.query.productId ? (
 								<Button className="next-button">
 									<Typography className="next-button-text">Save</Typography>
 								</Button>
@@ -339,18 +239,12 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 
 AddProduct.defaultProps = {
 	initialValues: {
-		propertyTitle: '',
-		propertyPrice: 0,
-		propertyType: '',
-		propertyLocation: '',
-		propertyAddress: '',
-		propertyBarter: false,
-		propertyRent: false,
-		propertyRooms: 0,
-		propertyBeds: 0,
-		propertySquare: 0,
-		propertyDesc: '',
-		propertyImages: [],
+		productName: '',
+		productPrice: 0,
+		productType: '',
+		productAddress: '',
+		productDesc: '',
+		productImages: [],
 	},
 };
 
