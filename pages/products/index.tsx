@@ -6,12 +6,74 @@ import { KeyboardArrowDown } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
 import { NextPage } from "next";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_PRODUCTS } from "apollo/user/query";
+import { T } from "libs/types/config";
+import { Product } from "libs/types/property/property";
+import { ProductsInquiry } from "libs/types/property/property.input";
 
-const Property:NextPage = () => {
+
+
+const Property:NextPage = ({initialInput}: any) => {
    const device = useDeviceDetect()
-   const [properties, setProperties] = useState<number[]>([1, 2, 3, 4, 5, 6])
+   const router = useRouter()
+   const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
+		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
+	);
+   const [currentPage, setCurrentPage] = useState<number>(1);
+   const [products, setProducts] = useState<Product[]>([])
+   const [total, setTotal] = useState<number>(0)
 
+
+   const {
+      loading: getProductsLoading,
+      data: getProductsData,
+      error: getProductsError,
+      refetch: getProductsRefetch,
+    } = useQuery(GET_PRODUCTS, {
+      fetchPolicy: "network-only",
+      variables: {
+        input: initialInput
+      },
+      notifyOnNetworkStatusChange: true,
+      onCompleted(data: T) {
+        setProducts(data?.getProducts?.list || [])
+        setTotal(data?.getProducts?.metaCounter?.[0]?.total)
+      },
+    });
+
+    //LifeCycles
+    useEffect(() => {
+		if (router.query.input) {
+			const inputObj = JSON.parse(router?.query?.input as string);
+			setSearchFilter(inputObj);
+		}
+
+		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
+	}, [router]);
+
+	useEffect(() => {
+		console.log('searchFilter', searchFilter);
+		getProductsRefetch({ input: searchFilter }).then();
+	}, [searchFilter]);
+
+
+   //HANDLERS
+
+   const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
+		searchFilter.page = value;
+		await router.push(
+			`/products?input=${JSON.stringify(searchFilter)}`,
+			`/products?input=${JSON.stringify(searchFilter)}`,
+			{
+				scroll: false,
+			},
+		);
+		setCurrentPage(value);
+	};
+   
    if(device === "mobile") {
       return <Stack>PROPERTYLIST PAGE</Stack>
    } else {
@@ -24,9 +86,9 @@ const Property:NextPage = () => {
               <div className="detail-title">Products</div>
           </Stack>
             <Stack className="container">
-               <Box className="right">
+               <Box className="right" sx={{paddingBottom: 20}}>
                   <Stack className="total-result">
-                     <Typography>Showing 5 results of available products</Typography>
+                     <Typography>Showing  available {total} product{total > 1 ? 's' : " 0"} </Typography>
                   </Stack>
                   <span>Sort by</span>
                   <div>
@@ -35,19 +97,27 @@ const Property:NextPage = () => {
                </Box>
                <Stack className="property-page">
                      <Stack className="filter-config">
-                        <Filter/>
+                        <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput}/>
                      </Stack>
                      <Stack className="main-config" mb={"76px"}>
-                        <Stack className="list-config">
-                           {/* {properties.map((property, index) => {
-                              return <ProductCard key={index}/>
-                           })} */}
+                     <Stack className="list-config">
+                           {products.length === 0 ? (
+                              <div className={'no-data'}>
+                              <img src="/img/icons/icoAlert.svg" alt="" />
+                              <p>No Products found!</p>
+                           </div>
+                           ) : (
+                              products.map((product) => {
+                                 return <ProductCard product={product} key={product?._id}/>
+                              })
+                           )}
                         </Stack>
                         <Stack className="pagination-config">
                            <Stack className="pagination-box">
                               <Pagination 
-                                 page={1} 
-                                 count={5} 
+                                 page={currentPage}
+                                 count={Math.ceil(total / searchFilter.limit)}
+                                 onChange={handlePaginationChange}
                                  shape="circular" 
                                  color="primary" 
                               />
@@ -59,6 +129,21 @@ const Property:NextPage = () => {
             </Stack>
          </div>
        )
+   }
+ }
+
+ Property.defaultProps = {
+   initialInput: {
+		page: 1,
+		limit: 9,
+		sort: 'createdAt',
+		direction: 'DESC',
+		search: {
+			pricesRange: {
+				start: 0,
+				end: 2000000,
+			}
+		},
    }
  }
  

@@ -1,5 +1,5 @@
-import withLayoutBasic from "@/libs/components/layout/LayoutBasic";
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
+import withLayoutBasic from "../../libs/components/layout/LayoutBasic";
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect";
 import { Box, Button, Container, Divider, FormControl, InputLabel, MenuItem, Rating, Select, SelectChangeEvent, Stack, Tab, Tabs } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -8,8 +8,8 @@ import GppGoodIcon from '@mui/icons-material/GppGood';
 import Link from "next/link";
 import { SyntheticEvent, useState } from "react";
 import TabContext from "@mui/lab/TabContext";
-import AdditionalInfo from "@/libs/components/property/AdditionalTab";
-import Reviews from "@/libs/components/common/Reviews";
+import AdditionalInfo from "../../libs/components/property/AdditionalTab";
+import Reviews from "../../libs/components/common/Reviews";
 
 
 

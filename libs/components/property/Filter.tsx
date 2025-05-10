@@ -8,20 +8,210 @@ import {
 	IconButton,
 } from '@mui/material';
 import { RefreshOutlined } from '@mui/icons-material';
+import { ProductsInquiry } from 'libs/types/property/property.input';
+import { ProductSize, ProductType } from 'libs/enums/product.enum';
+import { useRouter } from 'next/router';
 
-const Filter = () => {
+interface FilterProps {
+    searchFilter: ProductsInquiry;
+    setSearchFilter: any;
+    initialInput: ProductsInquiry;
+}
+
+const Filter = (props: FilterProps) => {
+    const {searchFilter, setSearchFilter, initialInput} = props;
         const [searchText, setSearchText] = useState<string>("");
+        const router = useRouter()
         const [showMore, setShowMore] = useState<boolean>(false);
-        const [propertyPrice, setPropertyPrice] = useState({
-          start: 0,
-          end: 250000,
-        });
-        const propertySquare = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
-        const category = ["Sofa-Wardrobe", "Round Table", "Chair", "Dining Table", "Lighting Craft", "Drawers", "Wardrobe"]
+        const [category, setCategory] = useState<ProductType[]>(Object.values(ProductType))
+        const [size, setSize] = useState<ProductSize[]>(Object.values(ProductSize))
+
+        useEffect(() => {
+            if(searchFilter?.search?.productList?.length == 0) {
+                delete searchFilter.search.productList;
+                setShowMore(false)
+                router.push(`/products?input=${JSON.stringify({
+                    ...searchFilter,
+                    search: {
+                        ...searchFilter.search,
+                    },
+                })}`, `/products?input=${JSON.stringify({
+                    ...searchFilter,
+                    search: {
+                        ...searchFilter.search,
+                    },
+                })}`, { scroll: false }).then();
+            }
+
+            if(searchFilter?.search?.sizeList?.length == 0) {
+                delete searchFilter.search.sizeList;
+                router.push(`/products?input=${JSON.stringify({
+                    ...searchFilter,
+                    search: {
+                        ...searchFilter.search,
+                    },
+                })}`, `/products?input=${JSON.stringify({
+                    ...searchFilter,
+                    search: {
+                        ...searchFilter.search
+                    },
+
+                })}`, {scroll: false}).then()
+            }
+        }, [searchFilter])
       
+        //Handlers
+
+        const productTypeSelectHandler = useCallback(
+            async (e: any) => {
+                try {
+                    const isChecked = e.target.checked;
+                    const value = e.target.value;
+                    if(isChecked) {
+                        await router.push(
+                            `/products?input=${JSON.stringify({
+                                ...searchFilter,
+                                search: { ...searchFilter.search, productList: [...(searchFilter?.search?.productList || []), value] },
+                            })}`,
+                            `/products?input=${JSON.stringify({
+                                ...searchFilter,
+                                search: { ...searchFilter.search, productList: [...(searchFilter?.search?.productList || []), value] },
+                            })}`,
+                            { scroll: false },
+                        );
+                    } else if (searchFilter?.search?.productList?.includes(value)) {
+                        await router.push(
+                            `/products?input=${JSON.stringify({
+                                ...searchFilter,
+                                search: {
+                                    ...searchFilter.search,
+                                    productList: searchFilter?.search?.productList?.filter((item: string) => item !== value),
+                                },
+                            })}`,
+                            `/products?input=${JSON.stringify({
+                                ...searchFilter,
+                                search: {
+                                    ...searchFilter.search,
+                                    productList: searchFilter?.search?.productList?.filter((item: string) => item !== value),
+                                },
+                            })}`,
+                            { scroll: false },
+                        );
+                    }
+                } catch(err) {
+                    console.log("Error on ProductTypeHanler ", err);
+                }
+            },
+       [searchFilter])
+
+
+       const productSizeHandler = useCallback(
+        async (e: any) => {
+            try {
+                const isChecked = e.target.checked;
+                const value = e.target.value;
+                if(isChecked) {
+                    await router.push(
+                        `/products?input=${JSON.stringify({
+                            ...searchFilter,
+                            search: { ...searchFilter.search, sizeList: [...(searchFilter?.search?.sizeList || []), value] },
+                        })}`,
+                        `/products?input=${JSON.stringify({
+                            ...searchFilter,
+                            search: { ...searchFilter.search, sizeList: [...(searchFilter?.search?.sizeList || []), value] },
+                        })}`,
+                        { scroll: false },
+                    );
+                } else if (searchFilter?.search?.sizeList?.includes(value)) {
+                    await router.push(
+                        `/products?input=${JSON.stringify({
+                            ...searchFilter,
+                            search: {
+                                ...searchFilter.search,
+                                sizeList: searchFilter?.search?.sizeList?.filter((item: string) => item !== value),
+                            },
+                        })}`,
+                        `/products?input=${JSON.stringify({
+                            ...searchFilter,
+                            search: {
+                                ...searchFilter.search,
+                                sizeList: searchFilter?.search?.sizeList?.filter((item: string) => item !== value),
+                            },
+                        })}`,
+                        { scroll: false },
+                    );
+                }
+            } catch(err) {
+                console.log("Error on ProductSizeHanler ", err);
+            }
+        },
+   [searchFilter])
+
+       
+
+       const productPriceRangeHandler = useCallback(
+       async (value: number, type: string ) => {
+        try {
+            if(type == "start") {
+                await router.push(
+					`/products?input=${JSON.stringify({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+							pricesRange: { ...searchFilter.search.pricesRange, start: value * 1 },
+						},
+					})}`,
+					`/products?input=${JSON.stringify({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+							pricesRange: { ...searchFilter.search.pricesRange, start: value * 1 },
+						},
+					})}`,
+					{ scroll: false },
+				);
+            } else {
+                await router.push(
+					`/products?input=${JSON.stringify({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+							pricesRange: { ...searchFilter.search.pricesRange, end: value * 1 },
+						},
+					})}`,
+					`/products?input=${JSON.stringify({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+							pricesRange: { ...searchFilter.search.pricesRange, end: value * 1 },
+						},
+					})}`,
+					{ scroll: false },
+				);
+            }
+
+        } catch(err) {
+            console.log("error on PriceRange =>", err);
+        }
+       },
+        [searchFilter])
+
+
+        const refreshHandler = async () => {
+            try {
+                setSearchText('');
+                await router.push(
+                    `/products?input=${JSON.stringify(initialInput)}`,
+                    `/products?input=${JSON.stringify(initialInput)}`,
+                    { scroll: false },
+                );
+            } catch (err: any) {
+                console.log('ERROR, refreshHandler:', err);
+            }
+        };
     return (
-        <Stack className="filter-main">
-            <Stack className="find-your-home" mb="30px">
+        <Stack className="filter-main" marginBottom={50}>
+            <Stack className="find-your-home" mb="70px">
                 <Typography className="title-main">Filter By Category</Typography>
                 <Stack className="input-box">
                     <OutlinedInput
@@ -30,11 +220,19 @@ const Filter = () => {
                     className="search-input"
                     placeholder="what are you looking?"
                     onChange={(e: any) => setSearchText(e.target.value)}
+                    onKeyDown={(event: any) => {
+                        if (event.key == 'Enter') {
+                            setSearchFilter({
+                                ...searchFilter,
+                                search: { ...searchFilter.search, text: searchText },
+                            });
+                        }
+                    }}
                     />
                     <img src="/img/icons/search_icon.png" alt=""/>
                     <Tooltip title="Reset">
                         <IconButton>
-                            <RefreshOutlined/>
+                            <RefreshOutlined onClick={refreshHandler}/>
                         </IconButton>
                     </Tooltip>
                 </Stack>
@@ -48,12 +246,13 @@ const Filter = () => {
                     return (
                         <Stack className={"input-box"} key={category}>
                             <Checkbox
-                            id="location"
+                            id={category}
                             className="property-checkbox"
                             color="default"
                             size="small"
                             value={category}
-                            checked={false}/>
+                            checked={(searchFilter?.search?.productList || []).includes(category as ProductType)}
+							onChange={productTypeSelectHandler}/>
                             <label htmlFor={category} style={{cursor: "pointer"}}>
                                 <Typography className="property-type">{category}</Typography>
                             </label>
@@ -64,7 +263,7 @@ const Filter = () => {
             </Stack>
             <Stack className="find-your-home" mb="30px">
                 <Typography className="title">Filter by Size</Typography>
-                {["Large", "Medium", "Small"].map((size: string) => (
+                {size.map((size: string) => (
                  <Stack className="input-box" key={size}>
                     <Checkbox
                         id={size}
@@ -72,7 +271,10 @@ const Filter = () => {
                         color="default"
                         size="small"
                         value={size}
-                    />
+                        checked={(searchFilter?.search?.sizeList || []).includes(size as ProductSize)}
+                        onChange={productSizeHandler}
+                        />
+                    
                     <label style={{ cursor: "pointer" }}>
                         <Typography className="property-type">{size}</Typography>
                     </label>
@@ -86,12 +288,12 @@ const Filter = () => {
                     type="number"
                     placeholder="$ min"
                     min={0}
-                    value={propertyPrice?.start ?? 0}
-                    onChange={(e: any) => {
-                        if (e.target.value >= 0) {
-                        setPropertyPrice({ ...propertyPrice, start: e.target.value });
-                        }
-                    }}
+                    value={searchFilter?.search?.pricesRange?.start ?? 0}
+					onChange={(e: any) => {
+								if (e.target.value >= 0) {
+									productPriceRangeHandler(e.target.value, 'start');
+								}
+					    }}
                     />
                 </Stack>
                 <div className="central-divider"></div>
@@ -99,10 +301,10 @@ const Filter = () => {
                     <input
                     type="number"
                     placeholder="$ max"
-                    value={propertyPrice?.end ?? 0}
+                    value={searchFilter?.search?.pricesRange?.end ?? 0}
                     onChange={(e: any) => {
                         if (e.target.value >= 0) {
-                        setPropertyPrice({ ...propertyPrice, end: e.target.value });
+                            productPriceRangeHandler(e.target.value, 'end');
                         }
                     }}
                     />
@@ -111,5 +313,6 @@ const Filter = () => {
         </Stack>
     )
 }
+
 
 export default Filter;

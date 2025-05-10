@@ -20,9 +20,9 @@ const Boardhighlights = (props: BoardArticleProps) => {
 
 
     const {
-        loading: getProductsLoading,
-        data: getProductsData,
-        error: getProductsError,
+        loading: getArticlesLoading,
+        data: getArticlesData,
+        error: getArticlesError,
         refetch: getArticlesRefetch,
       } = useQuery(GET_ALL_ARTICLES, {
         fetchPolicy: "network-only",
