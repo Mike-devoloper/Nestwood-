@@ -2,43 +2,43 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Pagination, Stack, Typography } from '@mui/material';
-import { Property } from '../../types/property/property';
-
+import { Product } from '../../types/property/property';
 import { useQuery } from '@apollo/client';
 import { PropertyCard } from './PropertyCard';
 import ProductCard from '../property/ProductCard';
-import { T } from '@/libs/types/config';
+import { T } from '../../../libs/types/config';
 import FavoriteCard from './FavoriteCard';
+import { GET_VISITED } from 'apollo/user/query';
 
 const RecentlyVisited: NextPage = () => {
 	const device = useDeviceDetect();
-	const [recentlyVisited, setRecentlyVisited] = useState<number[]>([1, 2, 3, 4]);
+	const [recentlyVisited, setRecentlyVisited] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [searchVisited, setSearchVisited] = useState<T>({ page: 1, limit: 6 });
 
 	/** APOLLO REQUESTS **/
-	// const {
-	// 	loading: getVisitedLoading,
-	// 	error: getVisitedError,
-	// 	data: getVisitedData,
-	// 	refetch: getVisitedRefetch
-	// } = useQuery(GET_VISITED, {
-	// 	fetchPolicy: "network-only",
-	// 	variables: {
-	// 		input: searchVisited
-	// 	},
-	// 	notifyOnNetworkStatusChange: true,
-	// 	onCompleted: (data: T) => {
-	// 		setRecentlyVisited(data?.getVisited?.list)
-	// 		setTotal(data?.getVisited?.metaCounter?.[0]?.total || [0])
-	// 	}
-	// });
+	const {
+		loading: getVisitedLoading,
+		error: getVisitedError,
+		data: getVisitedData,
+		refetch: getVisitedRefetch
+	} = useQuery(GET_VISITED, {
+		fetchPolicy: "network-only",
+		variables: {
+			input: searchVisited
+		},
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setRecentlyVisited(data?.getVisited?.list)
+			setTotal(data?.getVisited?.metaCounter?.[0]?.total || [0])
+		}
+	});
 
 
 	/** HANDLERS **/
-	// const paginationHandler = (e: T, value: number) => {
-	// 	setSearchVisited({ ...searchVisited, page: value });
-	// };
+	const paginationHandler = (e: T, value: number) => {
+		setSearchVisited({ ...searchVisited, page: value });
+	};
 
 	if (device === 'mobile') {
 		return <div>NESTAR MY FAVORITES MOBILE</div>;
@@ -53,8 +53,8 @@ const RecentlyVisited: NextPage = () => {
 				</Stack>
 				<Stack className="favorites-list-box">
 					{recentlyVisited?.length ? (
-						recentlyVisited?.map((property, index) => {
-							return <FavoriteCard key={property} />;
+						recentlyVisited?.map((product) => {
+							return <ProductCard product={product} recentlyVisited={true} />;
 						})
 					) : (
 						<div className={'no-data'}>

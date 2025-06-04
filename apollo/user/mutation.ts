@@ -61,3 +61,33 @@ export const SIGN_UP = gql`mutation Signup ($input: MemberInput!){
     }
 }
 `
+
+
+//LIKE TARGET PRODUCT
+
+export const LIKE_TARGET_PRODUCT = gql`
+mutation LikeTargetProperty ($productId: String!) {
+    likeTargetProperty(productId: $productId) {
+        _id
+        productType
+        productStatus
+        productSize
+        productAddress
+        productName
+        productPrice
+        productLikes
+        productRank
+        productViews
+        productComments
+        productImages
+        productDesc
+        memberId
+        soldAt
+        deletedAt
+        constructedAt
+        updatedAt
+        createdAt
+        accessToken
+    }
+}
+`

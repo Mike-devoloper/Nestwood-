@@ -1,5 +1,5 @@
-import withLayoutBasic from "@/libs/components/layout/LayoutBasic";
-import useDeviceDetect from "@/libs/hooks/useDeviceDetect";
+import withLayoutBasic from "../../libs/components/layout/LayoutBasic";
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect";
 import { Stack } from "@mui/material";
 import { NextPage } from "next";
 import { useState } from "react";

@@ -6,7 +6,7 @@ import { Stack, Box, Button, Pagination, Link } from '@mui/material';
 import { Menu, MenuItem } from '@mui/material';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import { useRouter } from 'next/router';
-import AgentCard from '@/libs/components/common/AgentCard';
+import AgentCard from '../../libs/components/common/AgentCard';
 
 // export const getStaticProps = async ({ locale }: any) => ({
 // 	props: {

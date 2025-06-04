@@ -1,7 +1,7 @@
 
 
 import { GET_PRODUCTS } from "../../apollo/user/query";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { Box,  Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,9 +9,13 @@ import { T } from "../types/config";
 import ProductCard from "./property/ProductCard";
 import { ProductsInquiry } from "../types/property/property.input";
 import { Product } from "../types/property/property";
+import { LIKE_TARGET_PRODUCT } from "apollo/user/mutation";
+import { Message } from "libs/enums/common.enum";
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from "libs/sweetAlert";
 
 interface PopularPropertiesProps {
-  initialInput: ProductsInquiry
+  initialInput: ProductsInquiry;
+  likeProductHandler?: any;
 }
 
 const PopularProperties = (props: PopularPropertiesProps) => {
@@ -33,11 +37,25 @@ const PopularProperties = (props: PopularPropertiesProps) => {
       },
     });
 
-    useEffect(() => {
-      if (getProductsData) {
-        console.log("getProductsData updated =>", getProductsData);
+
+    const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT)
+
+    
+    const likeProductHandler = async (user: T, id: string) => {
+      try {
+          if(!id) return
+          if(!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+
+          await likeTargetProduct({variables: {productId: id}})
+          await getProductsRefetch({input: initialInput})
+          await sweetTopSmallSuccessAlert("success", 800)
+      } catch (err: any) {
+          console.log("Error, likeProperty ", err.message);
+          sweetMixinErrorAlert(err.message).then()
       }
-    }, [getProductsData])
+  }
+
+
     
     
     
@@ -68,7 +86,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
                 popularProducts?.map((product: Product) => {
                     return (
                         <SwiperSlide key={product._id} className="popular-property-slide">
-                  <ProductCard product={product}/>
+                  <ProductCard product={product} likeProductHandler={likeProductHandler} key={product?._id}/>
                 </SwiperSlide>
                     )
                 })

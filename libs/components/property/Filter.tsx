@@ -12,6 +12,7 @@ import { ProductsInquiry } from 'libs/types/property/property.input';
 import { ProductSize, ProductType } from 'libs/enums/product.enum';
 import { useRouter } from 'next/router';
 
+
 interface FilterProps {
     searchFilter: ProductsInquiry;
     setSearchFilter: any;
@@ -25,6 +26,8 @@ const Filter = (props: FilterProps) => {
         const [showMore, setShowMore] = useState<boolean>(false);
         const [category, setCategory] = useState<ProductType[]>(Object.values(ProductType))
         const [size, setSize] = useState<ProductSize[]>(Object.values(ProductSize))
+
+        //LIFECYCLES
 
         useEffect(() => {
             if(searchFilter?.search?.productList?.length == 0) {
@@ -59,8 +62,10 @@ const Filter = (props: FilterProps) => {
                 })}`, {scroll: false}).then()
             }
         }, [searchFilter])
+
       
         //Handlers
+
 
         const productTypeSelectHandler = useCallback(
             async (e: any) => {
@@ -231,8 +236,8 @@ const Filter = (props: FilterProps) => {
                     />
                     <img src="/img/icons/search_icon.png" alt=""/>
                     <Tooltip title="Reset">
-                        <IconButton>
-                            <RefreshOutlined onClick={refreshHandler}/>
+                        <IconButton  onClick={refreshHandler}>
+                            <RefreshOutlined/>
                         </IconButton>
                     </Tooltip>
                 </Stack>

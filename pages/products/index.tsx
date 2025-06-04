@@ -8,11 +8,14 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GET_PRODUCTS } from "apollo/user/query";
 import { T } from "libs/types/config";
 import { Product } from "libs/types/property/property";
 import { ProductsInquiry } from "libs/types/property/property.input";
+import { LIKE_TARGET_PRODUCT } from "apollo/user/mutation";
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from "libs/sweetAlert";
+import { Message } from "libs/enums/common.enum";
 
 
 
@@ -35,7 +38,7 @@ const Property:NextPage = ({initialInput}: any) => {
     } = useQuery(GET_PRODUCTS, {
       fetchPolicy: "network-only",
       variables: {
-        input: initialInput
+        input: searchFilter
       },
       notifyOnNetworkStatusChange: true,
       onCompleted(data: T) {
@@ -43,6 +46,8 @@ const Property:NextPage = ({initialInput}: any) => {
         setTotal(data?.getProducts?.metaCounter?.[0]?.total)
       },
     });
+
+    const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT)
 
     //LifeCycles
     useEffect(() => {
@@ -61,6 +66,22 @@ const Property:NextPage = ({initialInput}: any) => {
 
 
    //HANDLERS
+
+   const likeProductHandler = async (user: T, id: string) => {
+      try {
+          if(!id) return
+          if(!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+
+          await likeTargetProduct({variables: {productId: id}})
+          await getProductsRefetch({input: initialInput})
+          const freshData = await getProductsRefetch({ input: initialInput });
+            setProducts(freshData?.data?.getProducts?.list || []);
+          await sweetTopSmallSuccessAlert("success", 800)
+      } catch (err: any) {
+          console.log("Error, likeProperty ", err.message);
+          sweetMixinErrorAlert(err.message).then()
+      }
+  }
 
    const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
 		searchFilter.page = value;
@@ -108,7 +129,7 @@ const Property:NextPage = ({initialInput}: any) => {
                            </div>
                            ) : (
                               products.map((product) => {
-                                 return <ProductCard product={product} key={product?._id}/>
+                                 return <ProductCard product={product} key={product?._id} likeProductHandler={likeProductHandler}/>
                               })
                            )}
                         </Stack>
@@ -135,7 +156,7 @@ const Property:NextPage = ({initialInput}: any) => {
  Property.defaultProps = {
    initialInput: {
 		page: 1,
-		limit: 9,
+		limit: 8,
 		sort: 'createdAt',
 		direction: 'DESC',
 		search: {

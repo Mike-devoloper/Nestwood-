@@ -127,7 +127,7 @@ const Top = () => {
                       src={
                         user?.memberImage
                           ? `${REACT_APP_API_URL}/${user?.memberImage}`
-                          : "/img/profile/defaultUser.svg"
+                          : "/img/profile/agent.png"
                       }
                       alt=""
                     />

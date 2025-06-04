@@ -7,9 +7,9 @@ import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { Property } from '../../libs/types/property/property';
-import ProductCard from '@/libs/components/property/ProductCard';
-import ReviewsCard from '@/libs/components/agent/ReviewsCard';
+import { Product } from '../../libs/types/property/property';
+import ProductCard from '../../libs/components/property/ProductCard';
+import ReviewsCard from '../../libs/components/agent/ReviewsCard';
 
 // export const getStaticProps = async ({ locale }: any) => ({
 // 	props: {
@@ -24,7 +24,7 @@ const AgentDetail: NextPage = () => {
 	const [agentId, setAgentId] = useState<string | null>(null);
 	// const [agent, setAgent] = useState<Member | null>(null);
 	// const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
-	const [agentProperties, setAgentProperties] = useState<number[]>([1,2,3,4]);
+	const [agentProperties, setAgentProperties] = useState<Product[]>([]);
 	const [propertyTotal, setPropertyTotal] = useState<number>();
 	// const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
 	const [agentComments, setAgentComments] = useState<number[]>([1, 2, 3, 4]);
@@ -194,10 +194,10 @@ const AgentDetail: NextPage = () => {
 					</Stack>
 					<Stack className={'agent-home-list'}>
 						<Stack className={'card-wrap'}>
-							{agentProperties.map((property, id) => {
+							{agentProperties.map((product, id) => {
 								return (
 									<div className={'wrap-main'} >
-										<ProductCard  key={property}/>
+										<ProductCard product={product}/>
 									</div>
 								);
 							})}

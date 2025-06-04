@@ -2,40 +2,45 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Pagination, Stack, Typography } from '@mui/material';
-import { Property } from '../../types/property/property';
-import { T } from '@/libs/types/config';
+import { Product } from '../../types/property/property';
+import { T } from '../../../libs/types/config';
 import ProductCard from '../property/ProductCard';
 import FavoriteCard from './FavoriteCard';
+import { useMutation, useQuery } from '@apollo/client';
+import { LIKE_TARGET_PRODUCT } from 'apollo/user/mutation';
+import { GET_FAVORITES } from 'apollo/user/query';
+import { Message } from 'libs/enums/common.enum';
+import { sweetMixinErrorAlert } from 'libs/sweetAlert';
 
 
 
 
 const MyFavorites: NextPage = () => {
 	const device = useDeviceDetect();
-	const [myFavorites, setMyFavorites] = useState<number[]>([1, 2, 3]);
+	const [myFavorites, setMyFavorites] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [searchFavorites, setSearchFavorites] = useState<T>({ page: 1, limit: 6 });
 
 
-	// const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY)
-	// /** APOLLO REQUESTS **/
+	const [likeTargetProperty] = useMutation(LIKE_TARGET_PRODUCT)
+	/** APOLLO REQUESTS **/
 
-	// const {
-	// 	loading: getFavoritesLoading,
-	// 	error: getFavoritesError,
-	// 	data: getFavoritesData,
-	// 	refetch: getFavoritesRefetch
-	// } = useQuery(GET_FAVORITES, {
-	// 	fetchPolicy: "network-only",
-	// 	variables: {
-	// 		input: searchFavorites
-	// 	},
-	// 	notifyOnNetworkStatusChange: true,
-	// 	onCompleted: (data: T) => {
-	// 		setMyFavorites(data?.getFavorites?.list)
-	// 		setTotal(data?.getFavorites?.metaCounter?.[0]?.total || [0])
-	// 	}
-	// });
+	const {
+		loading: getFavoritesLoading,
+		error: getFavoritesError,
+		data: getFavoritesData,
+		refetch: getFavoritesRefetch
+	} = useQuery(GET_FAVORITES, {
+		fetchPolicy: "network-only",
+		variables: {
+			input: searchFavorites
+		},
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setMyFavorites(data?.getFavorites?.list)
+			setTotal(data?.getFavorites?.metaCounter?.[0]?.total || [0])
+		}
+	});
 
 
 	/** HANDLERS **/
@@ -43,19 +48,19 @@ const MyFavorites: NextPage = () => {
 		setSearchFavorites({ ...searchFavorites, page: value });
 	};
 
-	// const likePropertyHandler = async (user: T, id: string) => {
-	// 	try {
-	// 		if(!id) return
-	// 		if(!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+	const likeProductHandler = async (user: T, id: string) => {
+		try {
+			if(!id) return
+			if(!user._id) throw new Error(Message.NOT_AUTHENTICATED);
 
-	// 		await likeTargetProperty({variables: {input: id}})
+			await likeTargetProperty({variables: {input: id}})
 			
-	// 		await getFavoritesRefetch({input: searchFavorites})
-	// 	} catch (err: any) {
-	// 		console.log("Error, likePropertyHandler ", err.message);
-	// 		sweetMixinErrorAlert(err.message).then()
-	// 	}
-	// }
+			await getFavoritesRefetch({input: searchFavorites})
+		} catch (err: any) {
+			console.log("Error, likePropertyHandler ", err.message);
+			sweetMixinErrorAlert(err.message).then()
+		}
+	}
 
 
 	if (device === 'mobile') {
@@ -71,8 +76,8 @@ const MyFavorites: NextPage = () => {
 				</Stack>
 				<Stack className="favorites-list-box">
 					{myFavorites?.length ? (
-						myFavorites?.map((property, index) => {
-							return <FavoriteCard key={property}/>;
+						myFavorites?.map((product) => {
+							return <ProductCard myFavorite={true} likeProductHandler={likeProductHandler} product={product}/>;
 						})
 					) : (
 						<div className={'no-data'}>
