@@ -10,21 +10,27 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import TabContext from "@mui/lab/TabContext";
 import AdditionalInfo from "../../libs/components/property/AdditionalTab";
 import Reviews from "../../libs/components/common/Reviews";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { T } from "libs/types/config";
 import { Product } from "libs/types/property/property";
-import { GET_PRODUCT } from "apollo/user/query";
+import { GET_COMMENTS, GET_PRODUCT } from "apollo/user/query";
 import {useRouter } from "next/router";
 import { REACT_APP_API_URL } from "libs/config";
+import CommentsInquiry, { CommentInput } from "libs/types/comments/comment.input";
+import { Comment } from "libs/types/comments/comment";
+import { CREATE_COMMENT } from "apollo/user/mutation";
+import { CommentGroup } from "libs/enums/comment.enum";
+import { Message } from "libs/enums/common.enum";
+import { sweetErrorHandling } from "libs/sweetAlert";
+import { userVar } from "apollo/store";
 
 
 
 
-const imagePath = [{ url: "/img/property/furni1.jpg" }, { url: "/img/property/furni2.jpg" }, { url: "/img/property/furni3.jpg" }];
-
-const PropertyDetail = (): any => {
+const PropertyDetail = ({initialComment, ...props}: any) => {
   const device = useDeviceDetect();
   const router = useRouter();
+  const user = useReactiveVar(userVar);
   const [slideImage, setSlideImage] = useState<string>("/img/property/bigImage.png");
   const [value, setValue] = useState<number | null>(2);
   const [size, setSize] =useState<string>('');
@@ -32,7 +38,17 @@ const PropertyDetail = (): any => {
   const [tab, setTab] = useState<string>("1")
   const [productId, setProductId] = useState<string | null>(null);
   const [product, setProduct] = useState<Product | null>(null)
-  const [productImage, setProductImage] = useState<string>('')
+  const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
+  const [productComment, setProductComments] = useState<Comment[]>([])
+  const [commentTotal, setCommentTotal] = useState<number>(0);
+  const [insertCommentData, setInsertCommentData] = useState<CommentInput>({
+		commentGroup: CommentGroup.PRODUCT,
+		commentContent: '',
+		commentRefId: '',
+	});
+
+
+
 
 
   const {
@@ -51,6 +67,49 @@ const PropertyDetail = (): any => {
     },
   });
 
+  const {
+    loading: getCommentsLoading,
+    data: getCommentsData,
+    error: getCommentsError,
+    refetch: getCommentsRefetch,
+    } = useQuery(GET_COMMENTS, {
+    fetchPolicy: 'cache-and-network',
+    variables: { input: initialComment },
+    skip: !commentInquiry.search.commentRefId,
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (data: T) => {
+      if (data?.getComments?.list) setProductComments(data?.getComments?.list);
+      setCommentTotal(data?.getComments?.metaCounter[0]?.total ?? 0)
+    },
+    });
+
+    //LifeCycles 
+useEffect(() => {
+  if (router.query.id) {
+    setProductId(router.query.id as string);
+    setCommentInquiry({
+      ...commentInquiry,
+      search: {
+        commentRefId: router.query.id as string,
+      },
+    });
+    setInsertCommentData({
+      ...insertCommentData,
+      commentRefId: router.query.id as string,
+    });
+  }
+}, [router]);
+
+
+useEffect(() => {
+  if(commentInquiry.search.commentRefId) {
+    getCommentsRefetch({input: commentInquiry})
+  }
+}, [commentInquiry]);
+    
+
+    //Handlers
+
   const changeImageHandler = (image: string) => {
     setSlideImage(image);
   };
@@ -65,22 +124,10 @@ const colorHandler = (event: SelectChangeEvent) => {
   setColor(event.target.value)
 }
 
-//LifeCycles 
-useEffect(() => {
-  if (router.query.id) {
-    setProductId(router.query.id as string);
-    // setCommentInquiry({
-    //   ...commentInquiry,
-    //   search: {
-    //     commentRefId: router.query.id as string,
-    //   },
-    // });
-    // setInsertCommentData({
-    //   ...insertCommentData,
-    //   commentRefId: router.query.id as string,
-    // });
-  }
-}, [router]);
+const refetchComment = (variables: {input: CommentsInquiry}) => {
+  return getCommentsRefetch(variables);
+};
+
 
   if (device === "mobile") {
     return <Stack>PROPERTYLIST PAGE</Stack>;
@@ -238,7 +285,7 @@ useEffect(() => {
                               </Box>
                           </Box>
                           <Stack className={"info-main-content"}>
-                              <Reviews setTab={setTab}/>
+                               <Reviews  productComment={productComment}   commentInquiry={commentInquiry} commentTotal={commentTotal} product={product} refetchComment={refetchComment} />
                               <AdditionalInfo setTab={setTab}/>
                           </Stack>
                       </TabContext>
@@ -258,6 +305,18 @@ useEffect(() => {
       </Stack>
     );
   }
+};
+
+PropertyDetail.defaultProps = {
+	initialComment: {
+		page: 1,
+		limit: 5,
+		sort: 'createdAt',
+		direction: 'DESC',
+		search: {
+			commentRefId: '',
+		},
+	},
 };
 
 export default withLayoutBasic(PropertyDetail);

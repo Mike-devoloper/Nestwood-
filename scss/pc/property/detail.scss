@@ -334,16 +334,16 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                gap: 15px; /* Adjust the spacing between items */
+                gap: 15px; 
                 flex-wrap: wrap;
                 border: 2px solid red;
                 .color {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    width: 100px; /* Adjust size as needed */
-                    height: 100px; /* Adjust size as needed */
-                    background-color: red; /* Example background color */
+                    width: 100px; 
+                    height: 100px; 
+                    background-color: red; 
                     color: white;
                     font-weight: bold;
                     border-radius: 5px;
@@ -394,6 +394,7 @@
                         .date-box {
                             display: flex;
                             flex-direction: row;
+                            align-items: center;
                             .memberName {
                                 font-size: 14px;
                                 font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -401,7 +402,9 @@
                             }
                             .date {
                                 font-size: 13px;
-                                font-weight: 400;
+                                font-weight: 500;
+                                margin-left: 5px;
+                                
                             }
                         }
                         .comment {

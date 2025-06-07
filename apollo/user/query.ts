@@ -278,3 +278,50 @@ export const GET_VISITED = gql`query GetVisited ($input: OrdinaryInquiry!) {
         }
     }
 }`
+
+
+export const GET_COMMENTS = gql`query GetComments ($input: CommentsInquiry!) {
+    getComments(input: $input) {
+        list {
+            _id
+            commentStatus
+            commentGroup
+            commentContent
+            commentRefId
+            memberId
+            createdAt
+            updatedAt
+            memberData {
+                _id
+                memberType
+                memberAuthType
+                memberStatus
+                memberNick
+                memberPhone
+                memberFullName
+                memberImage
+                memberAddress
+                memberDesc
+                memberProducts
+                memberFollowers
+                memberFollowings
+                memberArticle
+                memberViews
+                memberPoints
+                memberLikes
+                memberRank
+                memberWarnings
+                memberComments
+                memberBlocks
+                deletedAt
+                updatedAt
+                createdAt
+                accessToken
+            }
+        }
+        metaCounter {
+            total
+        }
+    }
+}
+`
