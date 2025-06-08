@@ -12,10 +12,10 @@ import AdditionalInfo from "../../libs/components/property/AdditionalTab";
 import Reviews from "../../libs/components/common/Reviews";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { T } from "libs/types/config";
-import { Product } from "libs/types/property/property";
-import { GET_COMMENTS, GET_PRODUCT } from "apollo/user/query";
+import { Product} from "libs/types/property/property";
+import { GET_COMMENTS, GET_PRODUCT, GET_PRODUCTS } from "apollo/user/query";
 import {useRouter } from "next/router";
-import { REACT_APP_API_URL } from "libs/config";
+import { Direction, REACT_APP_API_URL } from "libs/config";
 import CommentsInquiry, { CommentInput } from "libs/types/comments/comment.input";
 import { Comment } from "libs/types/comments/comment";
 import { CREATE_COMMENT } from "apollo/user/mutation";
@@ -23,6 +23,7 @@ import { CommentGroup } from "libs/enums/comment.enum";
 import { Message } from "libs/enums/common.enum";
 import { sweetErrorHandling } from "libs/sweetAlert";
 import { userVar } from "apollo/store";
+import ProductCard from "libs/components/property/ProductCard";
 
 
 
@@ -38,6 +39,7 @@ const PropertyDetail = ({initialComment, ...props}: any) => {
   const [tab, setTab] = useState<string>("1")
   const [productId, setProductId] = useState<string | null>(null);
   const [product, setProduct] = useState<Product | null>(null)
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([])
   const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
   const [productComment, setProductComments] = useState<Comment[]>([])
   const [commentTotal, setCommentTotal] = useState<number>(0);
@@ -82,6 +84,33 @@ const PropertyDetail = ({initialComment, ...props}: any) => {
       setCommentTotal(data?.getComments?.metaCounter[0]?.total ?? 0)
     },
     });
+
+    
+    const {
+      loading: getProductsLoading,
+      data: getProductsData,
+      error: getProductsError,
+      refetch: getProductsRefetch,
+    } = useQuery(GET_PRODUCTS, {
+      fetchPolicy: "network-only",
+      variables: {
+        input: {
+          page: 1,
+          limit: 5,
+          sort: "createdAt",
+          direction: "DESC",
+          search: {
+            productType: [product?.productType]
+          }
+        }
+      },
+      skip: !productId && !product,
+      notifyOnNetworkStatusChange: true,
+      onCompleted(data: T) {
+       if(data?.getProducts?.list) setRelatedProducts(data?.getProducts?.list || [])
+      },
+    });
+
 
     //LifeCycles 
 useEffect(() => {
@@ -291,14 +320,14 @@ const refetchComment = (variables: {input: CommentsInquiry}) => {
                       </TabContext>
           </Stack>
          <Stack className="related">
-         <Box> <div className="text">Related</div></Box>
-              <Stack className="container-box">
+         <Box> <div className="text">Dive deeper to our related products </div></Box>
+              <Stack className="related-box">
                   <Stack className="img-box">
-                    <div className="color">RED</div>
-                    <div className="color">RED</div>
-                    <div className="color">RED</div>
-                    <div className="color">RED</div>
-                    <div className="color">RED</div>
+                   {relatedProducts?.map((product: Product) => {
+                    return (
+                    <ProductCard key={product?._id} product={product} />
+                    )
+                   })}
                   </Stack>
               </Stack>
          </Stack>

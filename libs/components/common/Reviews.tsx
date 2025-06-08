@@ -76,7 +76,7 @@ const Reviews = (props: ReviewsProps) => {
 		: '/img/profile/defaultUser.svg';
     return (
         <TabPanel value={"2"}>
-             <Stack className="container">
+             <Stack className="review">
                 <Stack className="right-box">
                     <div className="text">{commentTotal} reviews for {product?.productName}</div>
                     <Stack className="review-container">

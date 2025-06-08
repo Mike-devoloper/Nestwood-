@@ -6,7 +6,7 @@ import { Editor } from '@toast-ui/react-editor';
 import { useRouter } from 'next/router';
 
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { T } from '@/libs/types/config';
+import { T } from '../../../libs/types/config';
 
 const TuiEditor = () => {
 	const editorRef = useRef<Editor>(null),
