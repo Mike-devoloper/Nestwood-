@@ -12,6 +12,7 @@ import { Product } from "../types/property/property";
 import { LIKE_TARGET_PRODUCT } from "apollo/user/mutation";
 import { Message } from "libs/enums/common.enum";
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from "libs/sweetAlert";
+import PopularProductCard from "./property/PopularProductCard";
 
 interface PopularPropertiesProps {
   initialInput: ProductsInquiry;
@@ -86,7 +87,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
                 popularProducts?.map((product: Product) => {
                     return (
                         <SwiperSlide key={product._id} className="popular-property-slide">
-                  <ProductCard product={product} likeProductHandler={likeProductHandler} key={product?._id}/>
+                  <PopularProductCard  key={product?._id}/>
                 </SwiperSlide>
                     )
                 })
