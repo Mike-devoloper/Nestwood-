@@ -295,7 +295,7 @@
                 .popular-card-container {
                   position: relative;
                   .card-box {
-                    max-width: 350px;
+                    width: 350px;
                     display: flex;
                     flex-direction: column;
                     .card-img {
@@ -307,7 +307,7 @@
                       background-color: rgb(0, 0, 0, 00.1);
                       .product-title {
                         font-size: 22px;
-                        max-width: 30px;
+                        max-width: 180px;
                         font-family: Arial, Helvetica, sans-serif;
                         font-weight: 500;
                       }

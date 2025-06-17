@@ -24,6 +24,7 @@ import { Message } from "libs/enums/common.enum";
 import { sweetErrorHandling } from "libs/sweetAlert";
 import { userVar } from "apollo/store";
 import ProductCard from "libs/components/property/ProductCard";
+import PopularProductCard from "libs/components/property/PopularProductCard";
 
 
 
@@ -322,13 +323,11 @@ const refetchComment = (variables: {input: CommentsInquiry}) => {
          <Stack className="related">
          <Box> <div className="text">Dive deeper to our related products </div></Box>
               <Stack className="related-box">
-                  <Stack className="img-box">
                    {relatedProducts?.map((product: Product) => {
                     return (
-                    <ProductCard key={product?._id} product={product} />
+                    <PopularProductCard key={product?._id} product={product} />
                     )
                    })}
-                  </Stack>
               </Stack>
          </Stack>
       </Stack>

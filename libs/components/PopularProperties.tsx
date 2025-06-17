@@ -87,7 +87,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
                 popularProducts?.map((product: Product) => {
                     return (
                         <SwiperSlide key={product._id} className="popular-property-slide">
-                  <PopularProductCard  key={product?._id}/>
+                  <PopularProductCard product={product}/>
                 </SwiperSlide>
                     )
                 })
