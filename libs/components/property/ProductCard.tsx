@@ -7,16 +7,18 @@ import { REACT_APP_API_URL } from "../../config";
 import { useReactiveVar } from "@apollo/client";
 import { userVar } from "apollo/store";
 import Link from "next/link";
+import { CartItem } from "libs/types/order/search";
 
 interface NewProductProps {
     product: Product;
     likeProductHandler?: any;
     myFavorite?: boolean;
 	recentlyVisited?: boolean;
+    onAdd: (item: CartItem) => void;
 }
 
 const ProductCard = (props: NewProductProps) => {
-    const {product, likeProductHandler, myFavorite, recentlyVisited} = props;
+    const {product, likeProductHandler, myFavorite, recentlyVisited, onAdd} = props;
     const user = useReactiveVar(userVar);
     const [value, setValue] = useState<number | null>(2);
     const isLiked = myFavorite || product?.meLiked && product?.meLiked[0]?.myFavorite
@@ -66,7 +68,16 @@ return (
             /></Box>
             <p className={"price"}>${product.productPrice}</p>
             
-           <Button className="shop-btn">Add to Cart</Button>
+           <Button className="shop-btn" onClick={(e) => {
+                          onAdd({
+                            _id: product._id,
+                            quantity: 1,
+                            name: product.productName,
+                            price: product.productPrice,
+                            image: product.productImages[0]
+                          })
+                          e.stopPropagation()
+                        }}>Add to Cart</Button>
         </Stack>
 
     </Stack>

@@ -108,3 +108,16 @@ export const CREATE_COMMENT = gql`
 		}
 	}
 `;
+
+export const CREATE_ORDER = gql`
+mutation CreateOrder($input: OrderInput!) {
+    createOrder(order: $input) {
+        _id
+        orderTotal
+        orderDeliveryType
+        orderStatus
+        memberId
+        createdAt
+        updatedAt
+    }
+}`

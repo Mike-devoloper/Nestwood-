@@ -28,6 +28,8 @@
                  }
           .container {
              padding-top: 100px;
+             display: flex;
+             flex-direction: row;
                 .filter-main {
                     margin-bottom: 100px;
                     width: 350px;

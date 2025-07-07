@@ -15,7 +15,7 @@ export interface ProductInput {
 
 interface PISearch {
 	memberId?: string;
-	productList?: ProductType[];
+	productType?: ProductType[];
 	sizeList?: ProductSize[];
 	pricesRange?: Range;
 	text?: string;
@@ -43,7 +43,7 @@ export interface AgentPropertiesInquiry {
 
 interface ALPISearch {
 	productStatus?: ProductStatus;
-	productList?: ProductType[];
+	productType?: ProductType[];
 }
 
 export interface AllPropertiesInquiry {

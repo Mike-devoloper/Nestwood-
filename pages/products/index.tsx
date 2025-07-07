@@ -13,14 +13,16 @@ import { GET_PRODUCTS } from "apollo/user/query";
 import { T } from "libs/types/config";
 import { Product } from "libs/types/property/property";
 import { ProductsInquiry } from "libs/types/property/property.input";
-import { LIKE_TARGET_PRODUCT } from "apollo/user/mutation";
+import { CREATE_ORDER, LIKE_TARGET_PRODUCT } from "apollo/user/mutation";
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from "libs/sweetAlert";
 import { Message } from "libs/enums/common.enum";
+import useBasket from "libs/hooks/useBasket";
 
 
 
 const Property:NextPage = ({initialInput}: any) => {
    const device = useDeviceDetect()
+   const {onAdd} = useBasket();
    const router = useRouter()
    const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
@@ -47,7 +49,9 @@ const Property:NextPage = ({initialInput}: any) => {
       },
     });
 
+      //Mutation 
     const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT)
+    
 
     //LifeCycles
     useEffect(() => {
@@ -66,6 +70,31 @@ const Property:NextPage = ({initialInput}: any) => {
 
 
    //HANDLERS
+
+   // const createOrderHandler = async (user: T, orderInput: OrderInput) => {
+   //    try {
+   //       if(!user._id) throw new Error(Message.NOT_AUTHENTICATED)
+   //       await createOrderProduct({variables: {
+   //             input: {
+   //               shippingAddress: {
+   //                 fullAddress: "123 Main Street",
+   //                 city: "San Diego",
+   //                 postalCode: 92101,
+   //                 country: 
+   //               },
+   //               orderItems: [
+   //                 {
+   //                   productId: ,
+   //                   itemPrice: 600,
+   //                   itemQuantity: 2
+   //                 }
+   //               ]
+   //             }
+   //       }})
+   //    } catch (err) {
+   //       console.log("err => ", err);
+   //    }
+   // }
 
    const likeProductHandler = async (user: T, id: string) => {
       try {
@@ -129,7 +158,7 @@ const Property:NextPage = ({initialInput}: any) => {
                            </div>
                            ) : (
                               products.map((product) => {
-                                 return <ProductCard product={product} key={product?._id} likeProductHandler={likeProductHandler}/>
+                                 return <ProductCard product={product} key={product?._id} likeProductHandler={likeProductHandler} onAdd={onAdd}/>
                               })
                            )}
                         </Stack>

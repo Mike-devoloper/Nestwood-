@@ -1,4 +1,4 @@
-import withLayoutBasic from "@/libs/components/layout/LayoutBasic";
+import withLayoutBasic from "../../libs/components/layout/LayoutBasic";
 import { ClearOutlined } from "@mui/icons-material";
 import { Box,  Button,  Divider,  Stack, Typography } from "@mui/material"
 import Link from "next/link";

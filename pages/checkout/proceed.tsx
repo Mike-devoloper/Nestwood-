@@ -1,4 +1,4 @@
-import withLayoutBasic from "@/libs/components/layout/LayoutBasic"
+import withLayoutBasic from "../../libs/components/layout/LayoutBasic"
 import { Box, Button, Divider, Link, Radio, Stack } from "@mui/material"
 import React from "react";
 

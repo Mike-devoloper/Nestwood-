@@ -1,4 +1,4 @@
-import withLayoutBasic from "@/libs/components/layout/LayoutBasic"
+import withLayoutBasic from "../../libs/components/layout/LayoutBasic"
 import { Box, Divider, Link, Stack } from "@mui/material"
 
 const finishProceed = () => {

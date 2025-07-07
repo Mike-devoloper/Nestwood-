@@ -22,6 +22,8 @@ import { useReactiveVar } from "@apollo/client";
 import { userVar } from "apollo/store";
 import { REACT_APP_API_URL } from "libs/config";
 import { Logout } from "@mui/icons-material";
+import useBasket from "libs/hooks/useBasket";
+import { CartItem } from "libs/types/order/search";
 
 const Top = () => {
   const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
@@ -36,6 +38,8 @@ const Top = () => {
   const logoutOpen = Boolean(logoutAnchor);
   const modalOpen = () => setOpen(true);
   const modalClose = () => setOpen(false);
+  const {cartItems, onAdd, onDelete, onRemove, onDeleteAll} = useBasket()
+
 
   const languages = [
     { code: "en", label: "English", flag: "/img/flag/langen.png" },
@@ -110,7 +114,7 @@ const Top = () => {
               onClick={toggleDrawer(true)}
               sx={{ cursor: "pointer" }}
             >
-              <Badge color="secondary" badgeContent={1}>
+              <Badge color="secondary" badgeContent={cartItems.length}>
                 <img src="/img/icons/basket.svg" alt="basket" />
               </Badge>
             </Box>
@@ -257,7 +261,14 @@ const Top = () => {
               )}
             </div>
           </Stack>
-          <Drawer open={drawerOpen} toggleDrawer={toggleDrawer} />
+          <Drawer 
+          open={drawerOpen} 
+          toggleDrawer={toggleDrawer} 
+          onAdd={onAdd}
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
+          onRemove={onRemove}
+          cartItems={cartItems}/>
         </Stack>
       </Stack>
     );

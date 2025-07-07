@@ -30,8 +30,8 @@ const Filter = (props: FilterProps) => {
         //LIFECYCLES
 
         useEffect(() => {
-            if(searchFilter?.search?.productList?.length == 0) {
-                delete searchFilter.search.productList;
+            if(searchFilter?.search?.productType?.length == 0) {
+                delete searchFilter.search.productType;
                 setShowMore(false)
                 router.push(`/products?input=${JSON.stringify({
                     ...searchFilter,
@@ -76,28 +76,28 @@ const Filter = (props: FilterProps) => {
                         await router.push(
                             `/products?input=${JSON.stringify({
                                 ...searchFilter,
-                                search: { ...searchFilter.search, productList: [...(searchFilter?.search?.productList || []), value] },
+                                search: { ...searchFilter.search, productType: [...(searchFilter?.search?.productType || []), value] },
                             })}`,
                             `/products?input=${JSON.stringify({
                                 ...searchFilter,
-                                search: { ...searchFilter.search, productList: [...(searchFilter?.search?.productList || []), value] },
+                                search: { ...searchFilter.search, productType: [...(searchFilter?.search?.productType || []), value] },
                             })}`,
                             { scroll: false },
                         );
-                    } else if (searchFilter?.search?.productList?.includes(value)) {
+                    } else if (searchFilter?.search?.productType?.includes(value)) {
                         await router.push(
                             `/products?input=${JSON.stringify({
                                 ...searchFilter,
                                 search: {
                                     ...searchFilter.search,
-                                    productList: searchFilter?.search?.productList?.filter((item: string) => item !== value),
+                                    productType: searchFilter?.search?.productType?.filter((item: string) => item !== value),
                                 },
                             })}`,
                             `/products?input=${JSON.stringify({
                                 ...searchFilter,
                                 search: {
                                     ...searchFilter.search,
-                                    productList: searchFilter?.search?.productList?.filter((item: string) => item !== value),
+                                    productType: searchFilter?.search?.productType?.filter((item: string) => item !== value),
                                 },
                             })}`,
                             { scroll: false },
@@ -256,7 +256,7 @@ const Filter = (props: FilterProps) => {
                             color="default"
                             size="small"
                             value={category}
-                            checked={(searchFilter?.search?.productList || []).includes(category as ProductType)}
+                            checked={(searchFilter?.search?.productType || []).includes(category as ProductType)}
 							onChange={productTypeSelectHandler}/>
                             <label htmlFor={category} style={{cursor: "pointer"}}>
                                 <Typography className="property-type">{category}</Typography>
