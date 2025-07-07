@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { Product } from '../../libs/types/property/property';
 import ProductCard from '../../libs/components/property/ProductCard';
 import ReviewsCard from '../../libs/components/agent/ReviewsCard';
+import { CartItem } from 'libs/types/order/search';
 
 // export const getStaticProps = async ({ locale }: any) => ({
 // 	props: {
@@ -194,13 +195,13 @@ const AgentDetail: NextPage = () => {
 					</Stack>
 					<Stack className={'agent-home-list'}>
 						<Stack className={'card-wrap'}>
-							{agentProperties.map((product, id) => {
+							{/* {agentProperties.map((product, id) => {
 								return (
 									<div className={'wrap-main'} >
-										<ProductCard product={product}/>
+										<ProductCard product={product} />
 									</div>
 								);
-							})}
+							})} */}
 						</Stack>
 						<Stack className={'pagination'}>
 							{propertyTotal ? (

@@ -121,3 +121,42 @@ mutation CreateOrder($input: OrderInput!) {
         updatedAt
     }
 }`
+
+//LIKE_TARGET_MEMBER 
+
+export const LIKE_TARGET_MEMBER = gql`
+mutation LikeTargetMember($input: String!) {
+    likeTargetMember(memberId: $input) {
+        _id
+        memberType
+        memberAuthType
+        memberStatus
+        memberNick
+        memberPhone
+        memberFullName
+        memberImage
+        memberAddress
+        memberDesc
+        memberProducts
+        memberFollowers
+        memberFollowings
+        memberArticle
+        memberViews
+        memberPoints
+        memberLikes
+        memberRank
+        memberWarnings
+        memberComments
+        memberBlocks
+        deletedAt
+        updatedAt
+        createdAt
+        accessToken
+        meLiked {
+            memberId
+            likeRefId
+            myFavorite
+        }
+    }
+}
+`

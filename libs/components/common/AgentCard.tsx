@@ -2,26 +2,27 @@ import React from 'react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Stack, Box, Typography } from '@mui/material';
 import Link from 'next/link';
-// import { REACT_APP_API_URL } from '../../config';
 import IconButton from '@mui/material/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useReactiveVar } from '@apollo/client';
-// import { userVar } from '../../../apollo/store';
+import { REACT_APP_API_URL } from 'libs/config';
+import { userVar } from 'apollo/store';
+
 
 interface AgentCardProps {
 	agent: any;
-	// likeMemberHandler: any;
+	likeMemberHandler: any;
 }
 
 const AgentCard = (props: AgentCardProps) => {
-	const { agent} = props;
+	const { agent, likeMemberHandler} = props;
 	const device = useDeviceDetect();
-	// const user = useReactiveVar(userVar);
-	// const imagePath: string = agent?.memberImage
-	// 	? `${REACT_APP_API_URL}/${agent?.memberImage}`
-	// 	: '/img/profile/defaultUser.svg';
+	const user = useReactiveVar(userVar);
+	const imagePath: string = agent?.memberImage
+		? `${REACT_APP_API_URL}/${agent?.memberImage}`
+		: '/img/profile/defaultUser.svg';
 
 	if (device === 'mobile') {
 		return <div>AGENT CARD</div>;
@@ -53,26 +54,25 @@ const AgentCard = (props: AgentCardProps) => {
 						<Link
 							href={{
 								pathname: '/agent/detail',
-								// query: { agentId: 'id' },
+								query: { agentId: 'id' },
 							}}
 						>
 							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
 						</Link>
-						<span>Mike</span>
 					</Box>
 					<Box component={'div'} className={'buttons'}>
 						<IconButton color={'default'}>
 							<RemoveRedEyeIcon />
 						</IconButton>
-						<Typography className="view-cnt">{40}</Typography>
-						<IconButton color={'default'}>
+						<Typography className="view-cnt">{agent?.memberViews}</Typography>
+						<IconButton color={'default'} onClick={() => likeMemberHandler(user, agent?._id)}>
 							{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
-								<FavoriteIcon color={'primary'} />
+								<FavoriteIcon color={'primary'}/>
 							) : (
 								<FavoriteBorderIcon />
 							)}
 						</IconButton>
-						<Typography className="view-cnt">{20}</Typography>
+						<Typography className="view-cnt">{agent?.memberLikes}</Typography>
 					</Box>
 				</Stack>
 			</Stack>
