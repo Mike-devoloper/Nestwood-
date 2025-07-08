@@ -19,8 +19,8 @@ import { ProductsInquiry } from 'libs/types/property/property.input';
 import { CommentGroup } from 'libs/enums/comment.enum';
 import useBasket from 'libs/hooks/useBasket';
 import { userVar } from 'apollo/store';
-import { sweetErrorHandling } from 'libs/sweetAlert';
-import { CREATE_COMMENT } from 'apollo/user/mutation';
+import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from 'libs/sweetAlert';
+import { CREATE_COMMENT, LIKE_TARGET_PRODUCT } from 'apollo/user/mutation';
 import { Messages } from 'libs/config';
 
 // export const getStaticProps = async ({ locale }: any) => ({
@@ -49,7 +49,7 @@ const AgentDetail: NextPage = ({initialInput, initialComment}: any) => {
 	});
 
 	const [createComment] = useMutation(CREATE_COMMENT);
-	// const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
+	const [likeTargetProperty] = useMutation(LIKE_TARGET_PRODUCT);
 	/** APOLLO REQUESTS **/
 	const {
 		loading: getMemberLoading,
@@ -170,23 +170,23 @@ const AgentDetail: NextPage = ({initialInput, initialComment}: any) => {
 		}
 	};
 
-	// const likePropertyHandler = async (user: any, id: string) => {
-	// 	try {
-	// 		if (!id) return;
-	// 		if (!user._id) throw new Error(Messages.error2);
+	const likeProductHandler = async (user: any, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Messages.error2);
 
-	// 		await likeTargetProperty({
-	// 			variables: {
-	// 				input: id,
-	// 			},
-	// 		});
+			await likeTargetProperty({
+				variables: {
+					productId: id,
+				},
+			});
 
-	// 		await getPropertiesRefetch({ input: searchFilter });
-	// 		await sweetTopSmallSuccessAlert('success', 800);
-	// 	} catch (err: any) {
-	// 		sweetMixinErrorAlert(err.message).then();
-	// 	}
-	// };
+			await getPropertiesRefetch({ input: searchFilter });
+			await sweetTopSmallSuccessAlert('success', 800);
+		} catch (err: any) {
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
 
 	if (device === 'mobile') {
 		return <div>AGENT DETAIL PAGE MOBILE</div>;
@@ -199,7 +199,7 @@ const AgentDetail: NextPage = ({initialInput, initialComment}: any) => {
 							src={'/img/profile/defaultUser.svg'}
 							alt=""
 						/>
-						<Box component={'div'} className={'info'} >
+						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
 							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
 							<div>
 								<img src="/img/icons/call.svg" alt="" />
@@ -212,7 +212,7 @@ const AgentDetail: NextPage = ({initialInput, initialComment}: any) => {
 							{agentProperties.map((product, id) => {
 								return (
 									<div className={'wrap-main'} >
-										<ProductCard product={product} onAdd={onAdd}/>
+										<ProductCard product={product} onAdd={onAdd} likeProductHandler={likeProductHandler}/>
 									</div>
 								);
 							})}
