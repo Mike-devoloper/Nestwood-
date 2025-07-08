@@ -2,7 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
@@ -11,6 +10,18 @@ import { Product } from '../../libs/types/property/property';
 import ProductCard from '../../libs/components/property/ProductCard';
 import ReviewsCard from '../../libs/components/agent/ReviewsCard';
 import { CartItem } from 'libs/types/order/search';
+import { GET_COMMENTS, GET_MEMBER, GET_PRODUCTS } from 'apollo/user/query';
+import { T } from 'libs/types/config';
+import { Member } from 'libs/types/member/member';
+import CommentsInquiry, { CommentInput } from 'libs/types/comments/comment.input';
+import{ Comment } from 'libs/types/comments/comment';
+import { ProductsInquiry } from 'libs/types/property/property.input';
+import { CommentGroup } from 'libs/enums/comment.enum';
+import useBasket from 'libs/hooks/useBasket';
+import { userVar } from 'apollo/store';
+import { sweetErrorHandling } from 'libs/sweetAlert';
+import { CREATE_COMMENT } from 'apollo/user/mutation';
+import { Messages } from 'libs/config';
 
 // export const getStaticProps = async ({ locale }: any) => ({
 // 	props: {
@@ -18,143 +29,146 @@ import { CartItem } from 'libs/types/order/search';
 // 	},
 // });
 
-const AgentDetail: NextPage = () => {
+const AgentDetail: NextPage = ({initialInput, initialComment}: any) => {
+	const {onAdd} = useBasket()
 	const device = useDeviceDetect();
 	const router = useRouter();
-	// const user = useReactiveVar(userVar);
+	const user = useReactiveVar(userVar);
 	const [agentId, setAgentId] = useState<string | null>(null);
-	// const [agent, setAgent] = useState<Member | null>(null);
-	// const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
+	const [agent, setAgent] = useState<Member | null>(null);
+	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(initialInput);
 	const [agentProperties, setAgentProperties] = useState<Product[]>([]);
 	const [propertyTotal, setPropertyTotal] = useState<number>();
-	// const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
-	const [agentComments, setAgentComments] = useState<number[]>([1, 2, 3, 4]);
+	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
+	const [agentComments, setAgentComments] = useState<Comment[]>([]);
 	const [commentTotal, setCommentTotal] = useState<number>(0);
-	// const [insertCommentData, setInsertCommentData] = useState<CommentInput>({
-	// 	commentGroup: CommentGroup.MEMBER,
-	// 	commentContent: '',
-	// 	commentRefId: '',
-	// });
+	const [insertCommentData, setInsertCommentData] = useState<CommentInput>({
+		commentGroup: CommentGroup.MEMBER,
+		commentContent: '',
+		commentRefId: '',
+	});
 
-	// const [createComment] = useMutation(CREATE_COMMENT);
+	const [createComment] = useMutation(CREATE_COMMENT);
 	// const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 	/** APOLLO REQUESTS **/
-	// const {
-	// 	loading: getMemberLoading,
-	// 	data: getMemberData,
-	// 	error: getMemberError,
-	// 	refetch: getMemberRefetch,
-	// } = useQuery(GET_MEMBER, {
-	// 	fetchPolicy: 'network-only',
-	// 	variables: { input: agentId },
-	// 	skip: !agentId,
-	// 	onCompleted: (data: T) => {
-	// 		setAgent(data?.getMember);
-	// 		setSearchFilter({
-	// 			...searchFilter,
-	// 			search: {
-	// 				memberId: data?.getMember?._id,
-	// 			},
-	// 		});
-	// 		setCommentInquiry({
-	// 			...commentInquiry,
-	// 			search: {
-	// 				commentRefId: data?.getMember?._id,
-	// 			},
-	// 		});
-	// 		setInsertCommentData({
-	// 			...insertCommentData,
-	// 			commentRefId: data?.getMember?._id,
-	// 		});
-	// 	},
-	// });
+	const {
+		loading: getMemberLoading,
+		data: getMemberData,
+		error: getMemberError,
+		refetch: getMemberRefetch,
+	} = useQuery(GET_MEMBER, {
+		fetchPolicy: 'network-only',
+		variables: { input: agentId },
+		skip: !agentId,
+		onCompleted: (data: T) => {
+			setAgent(data?.getMember);
+			setSearchFilter({
+				...searchFilter,
+				search: {
+					memberId: data?.getMember?._id,
+				},
+			});
+			setCommentInquiry({
+				...commentInquiry,
+				search: {
+					commentRefId: data?.getMember?._id,
+				},
+			});
+			setInsertCommentData({
+				...insertCommentData,
+				commentRefId: data?.getMember?._id,
+			});
+		},
+	});
 
-	// const {
-	// 	loading: getPropertiesLoading,
-	// 	data: getPropertiesData,
-	// 	error: getPropertiesError,
-	// 	refetch: getPropertiesRefetch,
-	// } = useQuery(GET_PROPERTIES, {
-	// 	fetchPolicy: 'network-only',
-	// 	variables: { input: searchFilter },
-	// 	skip: !searchFilter.search.memberId,
-	// 	notifyOnNetworkStatusChange: true,
-	// 	onCompleted: (data: T) => {
-	// 		setAgentProperties(data?.getProperties?.list);
-	// 		setPropertyTotal(data?.getProperties?.metaCounter[0]?.total ?? 0);
-	// 	},
-	// });
+	const {
+		loading: getPropertiesLoading,
+		data: getPropertiesData,
+		error: getPropertiesError,
+		refetch: getPropertiesRefetch,
+	} = useQuery(GET_PRODUCTS, {
+		fetchPolicy: 'network-only',
+		variables: { input: searchFilter },
+		skip: !searchFilter.search.memberId,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setAgentProperties(data?.getProducts?.list);
+			setPropertyTotal(data?.getProducts?.metaCounter[0]?.total ?? 0);
+		},
+	});
 
-	// const {
-	// 	loading: getCommentsLoading,
-	// 	data: getCommentsData,
-	// 	error: getCommentsError,
-	// 	refetch: getCommentsRefetch,
-	// } = useQuery(GET_COMMENTS, {
-	// 	fetchPolicy: 'network-only',
-	// 	variables: { input: commentInquiry },
-	// 	skip: !commentInquiry.search.commentRefId,
-	// 	notifyOnNetworkStatusChange: true,
-	// 	onCompleted: (data: T) => {
-	// 		setAgentComments(data?.getComments?.list);
-	// 		setCommentTotal(data?.getComments?.metaCounter[0].total ?? 0);
-	// 	},
-	// });
+	const {
+		loading: getCommentsLoading,
+		data: getCommentsData,
+		error: getCommentsError,
+		refetch: getCommentsRefetch,
+	} = useQuery(GET_COMMENTS, {
+		fetchPolicy: 'network-only',
+		variables: { input: commentInquiry },
+		skip: !commentInquiry.search.commentRefId,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setAgentComments(data?.getComments?.list);
+			setCommentTotal(data?.getComments?.metaCounter[0].total ?? 0);
+		},
+	});
 	
 	// /** LIFECYCLES **/
-	// useEffect(() => {
-	// 	if (router.query.agentId) setAgentId(router.query.agentId as string);
-	// }, [router]);
+	useEffect(() => {
+		if (router.query.agentId) setAgentId(router.query.agentId as string);
+	}, [router]);
 
-	// useEffect(() => {
-	// 	if (commentInquiry.search.commentRefId) {
-	// 		getCommentsRefetch({ variables: { input: commentInquiry } }).then();
-	// 	}
-	// }, [commentInquiry]);
+	useEffect(() => {
+		if (commentInquiry.search.commentRefId) {
+			getCommentsRefetch({ variables: { input: commentInquiry } }).then();
+		}
+	}, [commentInquiry]);
 
-	// useEffect(() => {
-	// 	if (searchFilter.search.memberId) {
-	// 		getPropertiesRefetch({ variables: { input: searchFilter } }).then();
-	// 	}
-	// }, [searchFilter]);
+	useEffect(() => {
+		if (searchFilter.search.memberId) {
+			getPropertiesRefetch({ variables: { input: searchFilter } }).then();
+		}
+	}, [searchFilter]);
 
-	// /** HANDLERS **/
-	// const redirectToMemberPageHandler = async (memberId: string) => {
-	// 	try {
-	// 		if (memberId === user?._id) await router.push(`/mypage?memberId=${memberId}`);
-	// 		else await router.push(`/member?memberId=${memberId}`);
-	// 	} catch (error) {
-	// 		await sweetErrorHandling(error);
-	// 	}
-	// };
+	/** HANDLERS **/
+	const redirectToMemberPageHandler = async (memberId: string) => {
+		try {
+			if (memberId === user?._id) await router.push(`/mypage?memberId=${memberId}`);
+			else await router.push(`/member?memberId=${memberId}`);
+		} catch (error) {
+			await sweetErrorHandling(error);
+		}
+	};
 
-	// const propertyPaginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
-	// 	searchFilter.page = value;
-	// 	setSearchFilter({ ...searchFilter });
-	// };
+	const productPaginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
+		setSearchFilter(prev => ({
+			...prev,
+			page: value,
+		  }));
+	};
 
-	// const commentPaginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
-	// 	commentInquiry.page = value;
-	// 	setCommentInquiry({ ...commentInquiry });
-	// };
+	const commentPaginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
+		commentInquiry.page = value;
+		setCommentInquiry({ ...commentInquiry });
+	};
 
-	// const createCommentHandler = async () => {
-	// 	try {
-	// 		if (!user._id) throw new Error(Messages.error2);
-	// 		if (user._id === agentId) throw new Error('Cannot write a review for yourself!');
+	const createCommentHandler = async () => {
+		try {
+			if (!user._id) throw new Error(Messages.error2);
+			if (user._id === agentId) throw new Error('Cannot write a review for yourself!');
 
-	// 		await createComment({
-	// 			variables: {
-	// 				input: insertCommentData,
-	// 			},
-	// 		});
+			await createComment({
+				variables: {
+					input: insertCommentData,
+				},
+			});
 
-	// 		setInsertCommentData({ ...insertCommentData, commentContent: '' });
-	// 		await getCommentsRefetch({ input: commentInquiry });
-	// 	} catch (err: any) {
-	// 		sweetErrorHandling(err).then();
-	// 	}
-	// };
+			setInsertCommentData({ ...insertCommentData, commentContent: '' });
+			await getCommentsRefetch({ input: commentInquiry });
+		} catch (err: any) {
+			sweetErrorHandling(err).then();
+		}
+	};
 
 	// const likePropertyHandler = async (user: any, id: string) => {
 	// 	try {
@@ -186,7 +200,7 @@ const AgentDetail: NextPage = () => {
 							alt=""
 						/>
 						<Box component={'div'} className={'info'} >
-							<strong>Mike</strong>
+							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
 							<div>
 								<img src="/img/icons/call.svg" alt="" />
 								<span>01000000</span>
@@ -195,22 +209,22 @@ const AgentDetail: NextPage = () => {
 					</Stack>
 					<Stack className={'agent-home-list'}>
 						<Stack className={'card-wrap'}>
-							{/* {agentProperties.map((product, id) => {
+							{agentProperties.map((product, id) => {
 								return (
 									<div className={'wrap-main'} >
-										<ProductCard product={product} />
+										<ProductCard product={product} onAdd={onAdd}/>
 									</div>
 								);
-							})} */}
+							})}
 						</Stack>
 						<Stack className={'pagination'}>
 							{propertyTotal ? (
 								<>
 									<Stack className="pagination-box">
 										<Pagination
-											page={3}
-											count={3}
-											
+											page={searchFilter.page}
+											count={Math.ceil(propertyTotal / searchFilter.limit) || 1}
+											onChange={productPaginationChangeHandler}
 											shape="circular"
 											color="primary"
 										/>
@@ -222,7 +236,7 @@ const AgentDetail: NextPage = () => {
 							) : (
 								<div className={'no-data'}>
 									<img src="/img/icons/icoAlert.svg" alt="" />
-									<p>No properties found!</p>
+									<p>No products found!</p>
 								</div>
 							)}
 						</Stack>
@@ -240,14 +254,14 @@ const AgentDetail: NextPage = () => {
 										{commentTotal} review{commentTotal > 1 ? 's' : ''}
 									</span>
 								</Box>
-								{agentComments?.map((comment, index ) => {
-									return <ReviewsCard key={comment} />
+								{agentComments?.map((comment: Comment ) => {
+									return <ReviewsCard comment={comment} key={comment?._id} />
 								})}
 								<Box component={'div'} className={'pagination-box'}>
 									<Pagination
-										page={3}
-										count={3}
-										
+										page={commentInquiry.page}
+										count={Math.ceil(commentTotal / commentInquiry.limit) || 1}
+										onChange={commentPaginationChangeHandler}
 										shape="circular"
 										color="primary"
 									/>
@@ -259,13 +273,16 @@ const AgentDetail: NextPage = () => {
 							<Typography className={'main-title'}>Leave A Review</Typography>
 							<Typography className={'review-title'}>Review</Typography>
 							<textarea
-								
+								onChange={({ target: { value } }: any) => {
+									setInsertCommentData({ ...insertCommentData, commentContent: value });
+								}}
+								value={insertCommentData.commentContent}
 							></textarea>
 							<Box className={'submit-btn'} component={'div'}>
 								<Button
 									className={'submit-review'}
-									// disabled={insertCommentData.commentContent === '' || user?._id === ''}
-									// onClick={createCommentHandler}
+									disabled={insertCommentData.commentContent === '' || user?._id === ''}
+									onClick={createCommentHandler}
 								>
 									<Typography className={'title'}>Submit Review</Typography>
 									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
@@ -291,23 +308,23 @@ const AgentDetail: NextPage = () => {
 	}
 };
 
-// AgentDetail.defaultProps = {
-// 	initialInput: {
-// 		page: 1,
-// 		limit: 9,
-// 		search: {
-// 			memberId: '',
-// 		},
-// 	},
-// 	initialComment: {
-// 		page: 1,
-// 		limit: 5,
-// 		sort: 'createdAt',
-// 		direction: 'ASC',
-// 		search: {
-// 			commentRefId: '',
-// 		},
-// 	},
-// };
+AgentDetail.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 9,
+		search: {
+			memberId: '',
+		},
+	},
+	initialComment: {
+		page: 1,
+		limit: 5,
+		sort: 'createdAt',
+		direction: 'ASC',
+		search: {
+			commentRefId: '',
+		},
+	},
+};
 
 export default withLayoutBasic(AgentDetail);

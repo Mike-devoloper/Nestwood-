@@ -39,13 +39,13 @@ const AgentCard = (props: AgentCardProps) => {
 						component={'div'}
 						className={'agent-img'}
 						style={{
-							backgroundImage: `url(/img/icons/userWhite.svg)`,
+							backgroundImage: `url(${imagePath})`,
 							backgroundSize: 'cover',
 							backgroundPosition: 'center',
 							backgroundRepeat: 'no-repeat',
 						}}
 					>
-						<div>{agent?.memberProperties} products</div>
+						<div>{agent?.memberProducts} products</div>
 					</Box>
 				</Link>
 
@@ -54,7 +54,7 @@ const AgentCard = (props: AgentCardProps) => {
 						<Link
 							href={{
 								pathname: '/agent/detail',
-								query: { agentId: 'id' },
+								query: { agentId: agent?._id },
 							}}
 						>
 							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>

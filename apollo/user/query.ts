@@ -325,3 +325,33 @@ export const GET_COMMENTS = gql`query GetComments ($input: CommentsInquiry!) {
     }
 }
 `
+
+export const GET_MEMBER = gql`query GetMember($input: String!) {
+    getMember(memberId: $input) {
+        _id
+        memberType
+        memberAuthType
+        memberStatus
+        memberNick
+        memberPhone
+        memberFullName
+        memberImage
+        memberAddress
+        memberDesc
+        memberProducts
+        memberFollowers
+        memberFollowings
+        memberArticle
+        memberViews
+        memberPoints
+        memberLikes
+        memberRank
+        memberWarnings
+        memberComments
+        memberBlocks
+        deletedAt
+        updatedAt
+        createdAt
+        accessToken
+    }
+}`
